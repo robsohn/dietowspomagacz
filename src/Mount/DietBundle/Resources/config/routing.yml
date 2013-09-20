@@ -31,3 +31,17 @@ mount_diet_meals_create:
     defaults: { _controller: MountDietBundle:Meals:post }
     requirements:
         _method: POST
+
+mount_diet_days:
+    pattern:  /calendar/{date}
+    defaults: { _controller: MountDietBundle:Days:get }
+    requirements:
+        _method: GET
+        date: \d+
+
+mount_diet_days_create:
+    pattern:  /calendar
+    defaults: { _controller: MountDietBundle:Days:post }
+    requirements:
+        _method: POST
+

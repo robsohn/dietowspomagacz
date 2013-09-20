@@ -1,0 +1,96 @@
+{% extends 'MountDietBundle::layout.html.twig' %}
+
+{% block header %}Dzień: {{ day.date }}{% endblock %}
+
+{% block content %}
+
+    <form action="{{ path('mount_diet_days_create') }}" method="post">
+
+        <fieldset>
+            <legend>Śniadanie</legend>
+
+            <div>
+                Kalorie: 500
+                Białka: 20
+                Węglowodany: 80
+                Tłuszcze: 10
+            </div>
+
+            <input type="checkbox" name="breakfast[]" id="breakfast-1" value="1">
+            <label for="breakfast-1">Musli z rodzynkami i suszonymi owocami</label>
+
+            <input type="checkbox" name="breakfast[]" id="breakfast-2" value="2">
+            <label for="breakfast-2">Sok pomarańczowy</label>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>II Śniadanie</legend>
+
+            <div>
+                Kalorie: 500
+                Białka: 20
+                Węglowodany: 80
+                Tłuszcze: 10
+            </div>
+
+            <input type="checkbox" name="breakfast[]" id="breakfast-1" value="1">
+            <label for="breakfast-1">Kanapka z szynką</label>
+
+            <input type="checkbox" name="breakfast[]" id="breakfast-2" value="2">
+            <label for="breakfast-2">Czarna Kawa</label>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Obiad</legend>
+
+            <div>
+                Kalorie: 800
+                Białka: 20
+                Węglowodany: 80
+                Tłuszcze: 10
+            </div>
+
+            <input type="checkbox" name="breakfast[]" id="breakfast-1" value="1">
+            <label for="breakfast-1">Brokuły z łososiem</label>
+
+            <input type="checkbox" name="breakfast[]" id="breakfast-2" value="2">
+            <label for="breakfast-2">Sok warzywny</label>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Podwieczorek</legend>
+
+            <div>
+                Kalorie: 200
+                Białka: 20
+                Węglowodany: 80
+                Tłuszcze: 10
+            </div>
+
+            <input type="checkbox" name="breakfast[]" id="breakfast-1" value="1">
+            <label for="breakfast-1">Serek</label>
+
+            <input type="checkbox" name="breakfast[]" id="breakfast-2" value="2">
+            <label for="breakfast-2">Sok warzywny</label>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Kolacja</legend>
+
+            <div>
+                Kalorie: 200
+                Białka: 20
+                Węglowodany: 80
+                Tłuszcze: 10
+            </div>
+
+            <input type="checkbox" name="breakfast[]" id="breakfast-1" value="1">
+            <label for="breakfast-1">Sardynki</label>
+        </fieldset>
+
+    </form>
+{% endblock %}
