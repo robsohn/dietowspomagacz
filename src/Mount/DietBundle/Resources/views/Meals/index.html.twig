@@ -1,0 +1,49 @@
+{% extends 'MountDietBundle::layout.html.twig' %}
+
+{% block header %}Posiłki{% endblock %}
+
+{% block content %}
+
+    <table>
+        <tr>
+            <th>Nazwa</th>
+            <th>Kategoria</th>
+            <th>Ilość</th>
+            <th>Kalorie</th>
+            <th>Węglowodany</th>
+            <th>Białka</th>
+            <th>Tłuszcze</th>
+            <th>&nbsp;</th>
+        </tr>
+
+        {% for entity in meals %}
+        <tr class="meal-summary">
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.type }}</td>
+            <td>&nbsp;</td>
+            <td>{{ entity.calories }}</td>
+            <td>{{ entity.carbs }}</td>
+            <td>{{ entity.protein }}</td>
+            <td>{{ entity.fat }}</td>
+            <td>&nbsp;</td>
+        </tr>
+
+            {% for food in entity.getFood() %}
+                <tr class="meal-food">
+                    <td>{{ food.getFood.name }}</td>
+                    <td>{{ food.getFood.category }}</td>
+                    <td>{{ food.serving }}</td>
+                    <td>{{ food.calories }}</td>
+                    <td>{{ food.carbs }}</td>
+                    <td>{{ food.protein }}</td>
+                    <td>{{ food.fat }}</td>
+                    <td>&nbsp;</td>
+                </tr>
+            {% endfor %}
+
+        {% else %}
+            <p>Brak posiłków.</p>
+        {% endfor %}
+
+    </table>
+{% endblock %}

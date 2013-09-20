@@ -1,0 +1,15 @@
+# Sample Apache 2 config
+# Update to appropriate values and place in /etc/apache2/sites-available
+# Enable with a2ensite
+<VirtualHost *:80>
+    ServerAdmin root@mountlab
+    ServerName www.mountlab.local
+
+    DocumentRoot "/var/www/mountlab/web"
+
+    <Directory /var/www/mountlab/web>
+        Options FollowSymLinks
+        AllowOverride All
+    </Directory>
+
+</VirtualHost>

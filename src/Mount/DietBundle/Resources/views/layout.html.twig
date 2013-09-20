@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html"; charset=utf-8" />
+        <title>{% block title %}symblog{% endblock %} - Dieta Wspomagacz</title>
+    </head>
+    <body>
+        <header><h1>{% block header %}{% endblock %}</h1></header>
+        <section id="messages">
+            {% if app.session.hasFlash('notice') %}
+                <div class="notice">{{ app.session.flash('notice') }}</div>
+            {% endif %}
+        </section>
+        <section id="content">
+            {% block content %}{% endblock %}
+        </section>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,33 @@
+mount_diet_homepage:
+    pattern:  /
+    defaults: { _controller: MountDietBundle:Default:index }
+
+mount_diet_food:
+    pattern:  /food
+    defaults: { _controller: MountDietBundle:Food:index }
+    requirements:
+        _method: GET
+
+mount_diet_food_create:
+    pattern:  /food
+    defaults: { _controller: MountDietBundle:Food:post }
+    requirements:
+        _method: POST
+
+mount_diet_meals:
+    pattern:  /meals
+    defaults: { _controller: MountDietBundle:Meals:index }
+    requirements:
+        _method: GET
+
+mount_diet_meals_new:
+    pattern:  /meals/new
+    defaults: { _controller: MountDietBundle:Meals:new }
+    requirements:
+        _method: GET
+
+mount_diet_meals_create:
+    pattern:  /meals
+    defaults: { _controller: MountDietBundle:Meals:post }
+    requirements:
+        _method: POST

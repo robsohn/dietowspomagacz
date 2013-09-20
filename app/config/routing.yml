@@ -1,0 +1,3 @@
+mount_diet:
+    resource: "@MountDietBundle/Resources/config/routing.yml"
+    prefix:   /

@@ -1,0 +1,26 @@
+{% extends 'MountDietBundle::layout.html.twig' %}
+
+{% block header %}Nowy Posiłek{% endblock %}
+
+{% block content %}
+
+    <form action="{{ path('mount_diet_meals_create') }}" method="post" {{ form_enctype(form) }}>
+
+        {{ form_widget(form) }}
+
+        <fieldset>
+            <legend>Jedzenie</legend>
+
+            {% for entity in food %}
+                <input type="checkbox" name="food[{{ entity.id }}][selected]" id="food-{{ entity.id }}" value="1">
+                <label for="food-{{ entity.id }}">{{ entity.name }}</label>
+                <input type="text" name="food[{{ entity.id }}][serving]" id="food-{{ entity.id }}-serving">
+                <label for="food-{{ entity.id }}-serving">{{ entity.servingSize }}</label>
+                <br>
+            {% endfor %}
+        </fieldset>
+
+        <input type="submit" value="Dodaj" />
+    </form>
+
+{% endblock %}
