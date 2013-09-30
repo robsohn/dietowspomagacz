@@ -12,4 +12,36 @@ use Doctrine\ORM\EntityRepository;
  */
 class MealRepository extends EntityRepository
 {
+    /**
+     * findBreakfast
+     *
+     * @return array
+     */
+    public function findBreakfast()
+    {
+        return $this->findByType('Śniadanie');
+    }
+
+    /**
+     * findByType
+     *
+     * @param string $type
+     * @return array
+     * @todo Refactor to use something different than name.
+     */
+    public function findByType($type)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('
+                SELECT m, t FROM MountDietBundle:Meal m
+                JOIN m.type t
+                WHERE t.name = :name'
+            )->setParameter('name', $type);
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return array();
+        }
+    }
 }

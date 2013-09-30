@@ -7,21 +7,53 @@
     <form action="{{ path('mount_diet_days_create') }}" method="post">
 
         <fieldset>
+            <div>
+                <label for="day-calories">Kalorie</label>
+                <input type="text" name="day-calories" id="day-calories" value="">
+
+                <label for="day-protein">Białka</label>
+                <input type="text" name="day-protein" id="day-protein" value="">
+
+                <label for="day-carbs">Węglowodany</label>
+                <input type="text" name="day-carbs" id="day-carbs" value="">
+
+                <label for="day-fat">Tłuszcze</label>
+                <input type="text" name="day-fat" id="day-fat" value="">
+            </div>
+        </fieldset>
+
+        <fieldset>
             <legend>Śniadanie</legend>
 
-            <div>
+            <div class="day-meal-header">
                 Kalorie: 500
                 Białka: 20
                 Węglowodany: 80
                 Tłuszcze: 10
             </div>
 
-            <input type="checkbox" name="breakfast[]" id="breakfast-1" value="1">
-            <label for="breakfast-1">Musli z rodzynkami i suszonymi owocami</label>
-
-            <input type="checkbox" name="breakfast[]" id="breakfast-2" value="2">
-            <label for="breakfast-2">Sok pomarańczowy</label>
-
+            <ul>
+                <li>
+                    <input type="checkbox" name="breakfast[]" id="breakfast-1" value="1">
+                    <label for="breakfast-1">Musli z rodzynkami i suszonymi owocami</label>
+                    <div class="day-meal-header">
+                        Kalorie: 500
+                        Białka: 20
+                        Węglowodany: 80
+                        Tłuszcze: 10
+                    </div>
+                </li>
+                <li>
+                    <input type="checkbox" name="breakfast[]" id="breakfast-2" value="2">
+                    <label for="breakfast-2">Sok pomarańczowy</label>
+                    <div class="day-meal-header">
+                        Kalorie: 500
+                        Białka: 20
+                        Węglowodany: 80
+                        Tłuszcze: 10
+                    </div>
+                </li>
+            </ul>
         </fieldset>
 
         <fieldset>

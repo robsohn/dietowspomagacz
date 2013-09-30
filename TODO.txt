@@ -20,7 +20,7 @@ WORK IN PROGRESS
         - /calendar wyświetla bieżący tydzień. Dzień, posiłki dla dnia, statystyki dla dnia.
 
     ** Dodawanie posiłków do dnia
-        - /calendar/<yyymmdd> wyświetla formularz. Jeżeli dzień jest już w bazie danych to formularz jest automatycznie
+        - /calendar/<yyyymmdd> wyświetla formularz. Jeżeli dzień jest już w bazie danych to formularz jest automatycznie
           wypełniony
         - Wyświetl nagłówek formularza, gdzie zliczane są kalorie, białka, węglowodany i tłuszcze wszystkich posiłków
             - Zaznacz na czerwono jeżeli kalorie są mniejsze/większe o 500 od planowanej dziennej dawki
