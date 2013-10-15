@@ -1,29 +1,49 @@
 WORK IN PROGRESS
 ----------------
 * Meals
-** Proces tworzenia nowego posilku:
-    DONE - Stworzyc strukture dla meal_food
-      DONE - Wygenerowac strukture w bazie danych i przetestowac
-      DONE - Dodac reguly do klasy Meal aby mogla pobrac wszystkie jedzenia
-    DONE - Stworzyć subform do dodawanie food do meal
-    DONE - zapisywanie posilku w bazie danych - aktualnie wywala problem
-    DONE - Zmienić symfony form i dodać automatyczną kalkulację kalorii, węgli, itp
-    - Dodac walidacje i wyświetlanie błędów
+    ** Proces tworzenia nowego posilku:
+        - Dodac walidacje i wyświetlanie błędów
 
-** Wyświetlanie posiłków
-    DONE - Opracowac cos co pozwoli na wyswietlenie jedzenia wchodzacego w sklad posilku
-    - Dodać link link na stronie posiłków do stworzenia nowego
+    ** Wyświetlanie posiłków
+        - Dodać link link na stronie posiłków do stworzenia nowego
+
+    ** Dodac pole "Przepis" do posiłku
 
 * Kalendarz
-    http://davidwalsh.name/php-calendar
+    ** Wyświetlanie kalendarza
+        - http://davidwalsh.name/php-calendar
+        - /calendar wyświetla bieżący tydzień. Dzień, posiłki dla dnia, statystyki dla dnia.
+
+    ** Dodawanie posiłków do dnia
+        - /calendar/<yyyymmdd> wyświetla formularz. Jeżeli dzień jest już w bazie danych to formularz jest automatycznie
+          wypełniony
+        - Wyświetl nagłówek formularza, gdzie zliczane są kalorie, białka, węglowodany i tłuszcze wszystkich posiłków
+            - Zaznacz na czerwono jeżeli kalorie są mniejsze/większe o 500 od planowanej dziennej dawki
+        - Wyświetl formularz podzielony na 5 części na każdy posiłek dnia
+            - Każda część podzielona jest na dwie strony: jedna wyświetla posiłki druga sumuje wartości przypisanych
+              posiłków
+                - checkbox może użyć atrybut data-* do zapisu wartości odzywczych posiłku
+                  (http://html5doctor.com/html5-custom-data-attributes/)
+        - Dane dla dnia (entity Day) to:
+            id
+            date
+            breakfast
+            lunch
+            dinner
+            tea
+            supper
+            calories
+            protein
+            carbs
+            fat
+
+        - posiłki dnia odpowiadają ID posiłkowi przypisanemu
 
 * Dashboard
     - Wyświetla wszystkie posiłki dla danego dnia
 
 * Import jedzenia
-    DONE -- Przygotować kategorie jedzenia
     -- Przygotować CSV file z listą jedzenia
-    -- Przygotować skrypt, który zaimportuje wszystkie jedzenie
     -- Usunąć Śniadanie II z bazy danych
 ================
 
