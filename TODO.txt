@@ -2,17 +2,12 @@ WORK IN PROGRESS
 ----------------
 * Meals
     ** Proces tworzenia nowego posilku:
-        DONE - Stworzyc strukture dla meal_food
-        DONE - Wygenerowac strukture w bazie danych i przetestowac
-        DONE - Dodac reguly do klasy Meal aby mogla pobrac wszystkie jedzenia
-        DONE - Stworzyć subform do dodawanie food do meal
-        DONE - zapisywanie posilku w bazie danych - aktualnie wywala problem
-        DONE - Zmienić symfony form i dodać automatyczną kalkulację kalorii, węgli, itp
         - Dodac walidacje i wyświetlanie błędów
 
     ** Wyświetlanie posiłków
-        DONE - Opracowac cos co pozwoli na wyswietlenie jedzenia wchodzacego w sklad posilku
         - Dodać link link na stronie posiłków do stworzenia nowego
+
+    ** Dodac pole "Przepis" do posiłku
 
 * Kalendarz
     ** Wyświetlanie kalendarza
@@ -48,9 +43,7 @@ WORK IN PROGRESS
     - Wyświetla wszystkie posiłki dla danego dnia
 
 * Import jedzenia
-    DONE -- Przygotować kategorie jedzenia
     -- Przygotować CSV file z listą jedzenia
-    DONE -- Przygotować skrypt, który zaimportuje wszystkie jedzenie
     -- Usunąć Śniadanie II z bazy danych
 ================
 

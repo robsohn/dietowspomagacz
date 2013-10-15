@@ -1,11 +1,11 @@
 {% extends 'MountDietBundle::layout.html.twig' %}
 
-{% block header %}Dzień: {{ day.date }}{% endblock %}
+{% block header %}Dzień: {{ day.date.format('Y-m-d') }}{% endblock %}
 
 {% block content %}
 
     <form action="{{ path('mount_diet_days_create') }}" method="post">
-
+        <input type="hidden" name="date" value="{{ day.date.format('Ymd') }}">
         <fieldset>
             <div>
                 <label for="day-calories">Kalorie</label>
@@ -20,6 +20,8 @@
                 <label for="day-fat">Tłuszcze</label>
                 <input type="text" name="day-fat" id="day-fat" value="">
             </div>
+
+            <input type="submit" value="Zapisz" />
         </fieldset>
 
         <fieldset>
@@ -33,26 +35,18 @@
             </div>
 
             <ul>
+                {% for entity in breakfast %}
                 <li>
-                    <input type="checkbox" name="breakfast[]" id="breakfast-1" value="1">
-                    <label for="breakfast-1">Musli z rodzynkami i suszonymi owocami</label>
+                    <input type="radio" name="breakfast" id="breakfast-{{ entity.id }}" value="{{ entity.id }}">
+                    <label for="breakfast-{{ entity.id }}">{{ entity.name }}</label>
                     <div class="day-meal-header">
-                        Kalorie: 500
-                        Białka: 20
-                        Węglowodany: 80
-                        Tłuszcze: 10
+                        Kalorie: {{ entity.calories }}
+                        Białka: {{ entity.protein }}
+                        Węglowodany: {{ entity.carbs }}
+                        Tłuszcze: {{ entity.fat }}
                     </div>
                 </li>
-                <li>
-                    <input type="checkbox" name="breakfast[]" id="breakfast-2" value="2">
-                    <label for="breakfast-2">Sok pomarańczowy</label>
-                    <div class="day-meal-header">
-                        Kalorie: 500
-                        Białka: 20
-                        Węglowodany: 80
-                        Tłuszcze: 10
-                    </div>
-                </li>
+                {% endfor %}
             </ul>
         </fieldset>
 
@@ -66,12 +60,20 @@
                 Tłuszcze: 10
             </div>
 
-            <input type="checkbox" name="breakfast[]" id="breakfast-1" value="1">
-            <label for="breakfast-1">Kanapka z szynką</label>
-
-            <input type="checkbox" name="breakfast[]" id="breakfast-2" value="2">
-            <label for="breakfast-2">Czarna Kawa</label>
-
+            <ul>
+                {% for entity in breakfast %}
+                <li>
+                    <input type="radio" name="second_breakfast" id="second_breakfast-{{ entity.id }}" value="{{ entity.id }}">
+                    <label for="second_breakfast-{{ entity.id }}">{{ entity.name }}</label>
+                    <div class="day-meal-header">
+                        Kalorie: {{ entity.calories }}
+                        Białka: {{ entity.protein }}
+                        Węglowodany: {{ entity.carbs }}
+                        Tłuszcze: {{ entity.fat }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
         </fieldset>
 
         <fieldset>
@@ -84,12 +86,20 @@
                 Tłuszcze: 10
             </div>
 
-            <input type="checkbox" name="breakfast[]" id="breakfast-1" value="1">
-            <label for="breakfast-1">Brokuły z łososiem</label>
-
-            <input type="checkbox" name="breakfast[]" id="breakfast-2" value="2">
-            <label for="breakfast-2">Sok warzywny</label>
-
+            <ul>
+                {% for entity in dinner %}
+                <li>
+                    <input type="radio" name="dinner" id="dinner-{{ entity.id }}" value="{{ entity.id }}">
+                    <label for="dinner-{{ entity.id }}">{{ entity.name }}</label>
+                    <div class="day-meal-header">
+                        Kalorie: {{ entity.calories }}
+                        Białka: {{ entity.protein }}
+                        Węglowodany: {{ entity.carbs }}
+                        Tłuszcze: {{ entity.fat }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
         </fieldset>
 
         <fieldset>
@@ -102,12 +112,20 @@
                 Tłuszcze: 10
             </div>
 
-            <input type="checkbox" name="breakfast[]" id="breakfast-1" value="1">
-            <label for="breakfast-1">Serek</label>
-
-            <input type="checkbox" name="breakfast[]" id="breakfast-2" value="2">
-            <label for="breakfast-2">Sok warzywny</label>
-
+            <ul>
+                {% for entity in tea %}
+                <li>
+                    <input type="radio" name="tea" id="tea-{{ entity.id }}" value="{{ entity.id }}">
+                    <label for="tea-{{ entity.id }}">{{ entity.name }}</label>
+                    <div class="day-meal-header">
+                        Kalorie: {{ entity.calories }}
+                        Białka: {{ entity.protein }}
+                        Węglowodany: {{ entity.carbs }}
+                        Tłuszcze: {{ entity.fat }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
         </fieldset>
 
         <fieldset>
@@ -120,8 +138,20 @@
                 Tłuszcze: 10
             </div>
 
-            <input type="checkbox" name="breakfast[]" id="breakfast-1" value="1">
-            <label for="breakfast-1">Sardynki</label>
+            <ul>
+                {% for entity in supper %}
+                <li>
+                    <input type="radio" name="supper" id="supper-{{ entity.id }}" value="{{ entity.id }}">
+                    <label for="supper-{{ entity.id }}">{{ entity.name }}</label>
+                    <div class="day-meal-header">
+                        Kalorie: {{ entity.calories }}
+                        Białka: {{ entity.protein }}
+                        Węglowodany: {{ entity.carbs }}
+                        Tłuszcze: {{ entity.fat }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
         </fieldset>
 
     </form>

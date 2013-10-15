@@ -10,24 +10,85 @@ use Mount\DietBundle\Entity\Day;
 
 class DaysController extends Controller
 {
+    /**
+     * indexAction
+     *
+     * @access public
+     * @return void
+     */
     public function indexAction()
     {
-        throw new \RuntimeException('Action not working');
+        echo 'done';
     }
 
+    /**
+     * getAction
+     *
+     * @param Request $request
+     * @access public
+     * @return void
+     */
     public function getAction(Request $request)
     {
-        $date = $request->get('date');
+        $date = \DateTime::createFromFormat(Day::URL_DATE_FORMAT, $request->get('date'));
 
-        //$day = $this->getDoctrine()->getRepository('MountDietBundle:Day')->findByDate($date);
+        if (!$date) {
+            throw new \InvalidArgumentException('Invalid date');
+        }
+
+        $day = $this->getDoctrine()->getRepository('MountDietBundle:Day')->findOneByDate($date);
+
+// TODO refactor to use date from GET
         $day = new Day();
-        $day->setDate('2013-09-20');
+        $day->setDate($date);
+
+        $mealRepository = $this->getDoctrine()->getRepository('MountDietBundle:Meal');
 
         return $this->render(
             'MountDietBundle:Days:get.html.twig',
             array(
                 'day' => $day,
+                'breakfast' => $mealRepository->findBreakfast(),
+                'dinner' => $mealRepository->findDinner(),
+                'tea' => $mealRepository->findTea(),
+                'supper' => $mealRepository->findSupper(),
             )
         );
+    }
+
+    public function postAction(Request $request)
+    {
+        $date = $request->get('date');
+
+        $day = new Day();
+        $day->setDateFromString($date);
+
+        $mealRepository = $this->getDoctrine()->getRepository('MountDietBundle:Meal');
+
+        $breakfast = $mealRepository->find($request->get('breakfast'));
+        $day->setBreakfast($breakfast);
+
+        $secondBreakfast = $mealRepository->find($request->get('second_breakfast'));
+        $day->setSecondBreakfast($secondBreakfast);
+
+        $dinner = $mealRepository->find($request->get('dinner'));
+        $day->setDinner($dinner);
+
+        $tea = $mealRepository->find($request->get('tea'));
+        $day->setTea($tea);
+
+        $supper = $mealRepository->find($request->get('supper'));
+        $day->setSupper($supper);
+
+        $day->calculateNutrition();
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($day);
+        $em->flush();
+
+        $this->get('session')->setFlash('notice', 'Zapisano dzień.');
+
+        // Redirect - This is important to prevent users re-posting the form if they refresh the page
+        return $this->redirect($this->generateUrl('mount_diet_days'), 201);
     }
 }

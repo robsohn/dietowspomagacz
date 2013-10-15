@@ -8,6 +8,13 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('MountDietBundle:Default:index.html.twig');
+        $day = $this->getDoctrine()->getRepository('MountDietBundle:Day')->findOneByDate(new \DateTime('now'));
+
+        return $this->render(
+            'MountDietBundle:Default:index.html.twig',
+            array(
+                'day' => $day
+            )
+        );
     }
 }
