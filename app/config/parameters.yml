@@ -1,10 +1,10 @@
 parameters:
     database_driver:   pdo_mysql
-    database_host:     127.0.0.1
+    database_host:     mysql5
     database_port:     ~
-    database_name:     diet
-    database_user:     root
-    database_password: root
+    database_name:     robsohn_diet
+    database_user:     robsohn_diet
+    database_password: r0bd13t
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1

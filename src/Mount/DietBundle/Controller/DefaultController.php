@@ -4,11 +4,19 @@ namespace Mount\DietBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Mount\DietBundle\Entity\Day;
+
 class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $day = $this->getDoctrine()->getRepository('MountDietBundle:Day')->findOneByDate(new \DateTime('now'));
+        $date = new \DateTime('now');
+        $day = $this->getDoctrine()->getRepository('MountDietBundle:Day')->findOneByDate($date);
+
+        if (!$day) {
+            $day = new Day();
+            $day->setDate($date);
+        }
 
         return $this->render(
             'MountDietBundle:Default:index.html.twig',
