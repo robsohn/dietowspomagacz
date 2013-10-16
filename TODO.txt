@@ -1,0 +1,129 @@
+WORK IN PROGRESS
+----------------
+* Meals
+    ** Proces tworzenia nowego posilku:
+        - Dodac walidacje i wyświetlanie błędów
+
+    ** Wyświetlanie posiłków
+        - Dodać link link na stronie posiłków do stworzenia nowego
+
+    ** Dodac pole "Przepis" do posiłku
+
+* Kalendarz
+    ** Wyświetlanie kalendarza
+        - http://davidwalsh.name/php-calendar
+        - /calendar wyświetla bieżący tydzień. Dzień, posiłki dla dnia, statystyki dla dnia.
+
+    ** Dodawanie posiłków do dnia
+        - /calendar/<yyyymmdd> wyświetla formularz. Jeżeli dzień jest już w bazie danych to formularz jest automatycznie
+          wypełniony
+        - Wyświetl nagłówek formularza, gdzie zliczane są kalorie, białka, węglowodany i tłuszcze wszystkich posiłków
+            - Zaznacz na czerwono jeżeli kalorie są mniejsze/większe o 500 od planowanej dziennej dawki
+        - Wyświetl formularz podzielony na 5 części na każdy posiłek dnia
+            - Każda część podzielona jest na dwie strony: jedna wyświetla posiłki druga sumuje wartości przypisanych
+              posiłków
+                - checkbox może użyć atrybut data-* do zapisu wartości odzywczych posiłku
+                  (http://html5doctor.com/html5-custom-data-attributes/)
+        - Dane dla dnia (entity Day) to:
+            id
+            date
+            breakfast
+            lunch
+            dinner
+            tea
+            supper
+            calories
+            protein
+            carbs
+            fat
+
+        - posiłki dnia odpowiadają ID posiłkowi przypisanemu
+
+* Dashboard
+    - Wyświetla wszystkie posiłki dla danego dnia
+
+* Import jedzenia
+    -- Przygotować CSV file z listą jedzenia
+    -- Usunąć Śniadanie II z bazy danych
+================
+
+FOOD
+
+
+MEALS
+- name
+- type
+- calories (always per 100g)
+- fat
+- carbs
+- protein
+
+
+meal_food
+collection of rows:
+- food
+- qty (always in grams)
+- calories  (calculation per qty)
+- fat (calculation per qty)
+- carbs (calculation per qty)
+- protein (calculation per qty)
+
+
+CALENDAR
+Day
+
+breakfast
+brunch
+lunch
+tea
+dinner
+
+PROFILE
+user profile
+
+age
+height
+weight
+
+URLs:
+
+/
+main dashboard. Should display menu for current day
+
+/profile
+
+/food
+GET - shows list of food
+POST - creates new food
+
+/food/id
+GET - displays food details
+POST - updates food
+
+/meals
+GET - shows list of meals
+POST - creates new meal
+
+/meals/id
+
+/calendar
+
+
+=============
+FOOD
+
+Entity:
+- name
+- type
+- calories
+- serving_size (grams or package)
+- fat
+- carbs
+- protein
+
+
+=============
+
+REST
+
+http://williamdurand.fr/2012/08/02/rest-apis-with-symfony2-the-right-way/

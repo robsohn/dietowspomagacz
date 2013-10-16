@@ -1,0 +1,207 @@
+{% extends 'MountDietBundle::layout.html.twig' %}
+
+{% block header %}Dieta Wspomagacz{% endblock %}
+
+{% block content %}
+    <a href="{{ path('mount_diet_food') }}">Jedzenie</a>
+    <a href="{{ path('mount_diet_meals') }}">Posiłki</a>
+
+    <h2>{{ day.date.format('Y-m-d') }}</h2>
+
+    <div>
+        Kalorie: {{ day.calories }}
+        Białka: {{ day.protein }}
+        Węglowodany: {{ day.carbs }}
+        Tłuszcze: {{ day.fat }}
+    </div>
+
+    <div>
+        <h2>Śniadanie</h2>
+
+        {% if day.getBreakfast() %}
+            <h3>{{ day.getBreakfast().getName() }}</h3>
+            <div class="day-meal-header">
+                Kalorie: {{ day.getBreakfast().getCalories() }}
+                Białka: {{ day.getBreakfast().getProtein() }}
+                Węglowodany: {{ day.getBreakfast().getCarbs() }}
+                Tłuszcze: {{ day.getBreakfast().getFat() }}
+            </div>
+
+            <table>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Waga</th>
+                    <th>Kalorie</th>
+                    <th>Białka</th>
+                    <th>Węglowodany</th>
+                    <th>Tłuszcze</th>
+                <tr>
+
+                {% for food in day.getBreakfast().getFood() %}
+                <tr class="meal-food">
+                    <td>{{ food.getFood.name }}</td>
+                    <td>{{ food.serving }}</td>
+                    <td>{{ food.calories }}</td>
+                    <td>{{ food.protein }}</td>
+                    <td>{{ food.carbs }}</td>
+                    <td>{{ food.fat }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <a href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+        {% endif %}
+    </div>
+
+    <div>
+        <h2>Drugie Śniadanie</h2>
+
+        {% if day.getSecondBreakfast() %}
+            <h3>{{ day.getSecondBreakfast().getName() }}</h3>
+            <div class="day-meal-header">
+                Kalorie: {{ day.getSecondBreakfast().getCalories() }}
+                Białka: {{ day.getSecondBreakfast().getProtein() }}
+                Węglowodany: {{ day.getSecondBreakfast().getCarbs() }}
+                Tłuszcze: {{ day.getSecondBreakfast().getFat() }}
+            </div>
+
+            <table>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Waga</th>
+                    <th>Kalorie</th>
+                    <th>Białka</th>
+                    <th>Węglowodany</th>
+                    <th>Tłuszcze</th>
+                <tr>
+
+                {% for food in day.getSecondBreakfast().getFood() %}
+                <tr class="meal-food">
+                    <td>{{ food.getFood.name }}</td>
+                    <td>{{ food.serving }}</td>
+                    <td>{{ food.calories }}</td>
+                    <td>{{ food.protein }}</td>
+                    <td>{{ food.carbs }}</td>
+                    <td>{{ food.fat }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <a href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+        {% endif %}
+    </div>
+
+    <div>
+        <h2>Obiad</h2>
+
+        {% if day.getDinner() %}
+            <h3>{{ day.getDinner().getName() }}</h3>
+            <div class="day-meal-header">
+                Kalorie: {{ day.getDinner().getCalories() }}
+                Białka: {{ day.getDinner().getProtein() }}
+                Węglowodany: {{ day.getDinner().getCarbs() }}
+                Tłuszcze: {{ day.getDinner().getFat() }}
+            </div>
+
+            <table>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Waga</th>
+                    <th>Kalorie</th>
+                    <th>Białka</th>
+                    <th>Węglowodany</th>
+                    <th>Tłuszcze</th>
+                <tr>
+
+                {% for food in day.getDinner().getFood() %}
+                <tr class="meal-food">
+                    <td>{{ food.getFood.name }}</td>
+                    <td>{{ food.serving }}</td>
+                    <td>{{ food.calories }}</td>
+                    <td>{{ food.protein }}</td>
+                    <td>{{ food.carbs }}</td>
+                    <td>{{ food.fat }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <a href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+        {% endif %}
+    </div>
+
+    <div>
+        <h2>Podwieczorek</h2>
+
+        {% if day.getTea() %}
+            <h3>{{ day.getTea().getName() }}</h3>
+            <div class="day-meal-header">
+                Kalorie: {{ day.getTea().getCalories() }}
+                Białka: {{ day.getTea().getProtein() }}
+                Węglowodany: {{ day.getTea().getCarbs() }}
+                Tłuszcze: {{ day.getTea().getFat() }}
+            </div>
+
+            <table>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Waga</th>
+                    <th>Kalorie</th>
+                    <th>Białka</th>
+                    <th>Węglowodany</th>
+                    <th>Tłuszcze</th>
+                <tr>
+
+                {% for food in day.getTea().getFood() %}
+                <tr class="meal-food">
+                    <td>{{ food.getFood.name }}</td>
+                    <td>{{ food.serving }}</td>
+                    <td>{{ food.calories }}</td>
+                    <td>{{ food.protein }}</td>
+                    <td>{{ food.carbs }}</td>
+                    <td>{{ food.fat }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <a href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+        {% endif %}
+    </div>
+
+    <div>
+        <h2>Kolacja</h2>
+
+        {% if day.getSupper() %}
+            <h3>{{ day.getSupper().getName() }}</h3>
+            <div class="day-meal-header">
+                Kalorie: {{ day.getSupper().getCalories() }}
+                Białka: {{ day.getSupper().getProtein() }}
+                Węglowodany: {{ day.getSupper().getCarbs() }}
+                Tłuszcze: {{ day.getSupper().getFat() }}
+            </div>
+
+            <table>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Waga</th>
+                    <th>Kalorie</th>
+                    <th>Białka</th>
+                    <th>Węglowodany</th>
+                    <th>Tłuszcze</th>
+                <tr>
+
+                {% for food in day.getSupper().getFood() %}
+                <tr class="meal-food">
+                    <td>{{ food.getFood.name }}</td>
+                    <td>{{ food.serving }}</td>
+                    <td>{{ food.calories }}</td>
+                    <td>{{ food.protein }}</td>
+                    <td>{{ food.carbs }}</td>
+                    <td>{{ food.fat }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <a href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+        {% endif %}
+    </div>
+{% endblock %}

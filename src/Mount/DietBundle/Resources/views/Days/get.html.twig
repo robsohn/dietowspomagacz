@@ -1,0 +1,158 @@
+{% extends 'MountDietBundle::layout.html.twig' %}
+
+{% block header %}Dzień: {{ day.date.format('Y-m-d') }}{% endblock %}
+
+{% block content %}
+
+    <form action="{{ path('mount_diet_days_create') }}" method="post">
+        <input type="hidden" name="date" value="{{ day.date.format('Ymd') }}">
+        <fieldset>
+            <div>
+                <label for="day-calories">Kalorie</label>
+                <input type="text" name="day-calories" id="day-calories" value="">
+
+                <label for="day-protein">Białka</label>
+                <input type="text" name="day-protein" id="day-protein" value="">
+
+                <label for="day-carbs">Węglowodany</label>
+                <input type="text" name="day-carbs" id="day-carbs" value="">
+
+                <label for="day-fat">Tłuszcze</label>
+                <input type="text" name="day-fat" id="day-fat" value="">
+            </div>
+
+            <input type="submit" value="Zapisz" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Śniadanie</legend>
+
+            <div class="day-meal-header">
+                Kalorie: 500
+                Białka: 20
+                Węglowodany: 80
+                Tłuszcze: 10
+            </div>
+
+            <ul>
+                {% for entity in breakfast %}
+                <li>
+                    <input type="radio" name="breakfast" id="breakfast-{{ entity.id }}" value="{{ entity.id }}">
+                    <label for="breakfast-{{ entity.id }}">{{ entity.name }}</label>
+                    <div class="day-meal-header">
+                        Kalorie: {{ entity.calories }}
+                        Białka: {{ entity.protein }}
+                        Węglowodany: {{ entity.carbs }}
+                        Tłuszcze: {{ entity.fat }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+
+        <fieldset>
+            <legend>II Śniadanie</legend>
+
+            <div>
+                Kalorie: 500
+                Białka: 20
+                Węglowodany: 80
+                Tłuszcze: 10
+            </div>
+
+            <ul>
+                {% for entity in breakfast %}
+                <li>
+                    <input type="radio" name="second_breakfast" id="second_breakfast-{{ entity.id }}" value="{{ entity.id }}">
+                    <label for="second_breakfast-{{ entity.id }}">{{ entity.name }}</label>
+                    <div class="day-meal-header">
+                        Kalorie: {{ entity.calories }}
+                        Białka: {{ entity.protein }}
+                        Węglowodany: {{ entity.carbs }}
+                        Tłuszcze: {{ entity.fat }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+
+        <fieldset>
+            <legend>Obiad</legend>
+
+            <div>
+                Kalorie: 800
+                Białka: 20
+                Węglowodany: 80
+                Tłuszcze: 10
+            </div>
+
+            <ul>
+                {% for entity in dinner %}
+                <li>
+                    <input type="radio" name="dinner" id="dinner-{{ entity.id }}" value="{{ entity.id }}">
+                    <label for="dinner-{{ entity.id }}">{{ entity.name }}</label>
+                    <div class="day-meal-header">
+                        Kalorie: {{ entity.calories }}
+                        Białka: {{ entity.protein }}
+                        Węglowodany: {{ entity.carbs }}
+                        Tłuszcze: {{ entity.fat }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+
+        <fieldset>
+            <legend>Podwieczorek</legend>
+
+            <div>
+                Kalorie: 200
+                Białka: 20
+                Węglowodany: 80
+                Tłuszcze: 10
+            </div>
+
+            <ul>
+                {% for entity in tea %}
+                <li>
+                    <input type="radio" name="tea" id="tea-{{ entity.id }}" value="{{ entity.id }}">
+                    <label for="tea-{{ entity.id }}">{{ entity.name }}</label>
+                    <div class="day-meal-header">
+                        Kalorie: {{ entity.calories }}
+                        Białka: {{ entity.protein }}
+                        Węglowodany: {{ entity.carbs }}
+                        Tłuszcze: {{ entity.fat }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+
+        <fieldset>
+            <legend>Kolacja</legend>
+
+            <div>
+                Kalorie: 200
+                Białka: 20
+                Węglowodany: 80
+                Tłuszcze: 10
+            </div>
+
+            <ul>
+                {% for entity in supper %}
+                <li>
+                    <input type="radio" name="supper" id="supper-{{ entity.id }}" value="{{ entity.id }}">
+                    <label for="supper-{{ entity.id }}">{{ entity.name }}</label>
+                    <div class="day-meal-header">
+                        Kalorie: {{ entity.calories }}
+                        Białka: {{ entity.protein }}
+                        Węglowodany: {{ entity.carbs }}
+                        Tłuszcze: {{ entity.fat }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+
+    </form>
+{% endblock %}

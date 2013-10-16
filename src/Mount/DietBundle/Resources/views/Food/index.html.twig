@@ -1,0 +1,44 @@
+{% extends 'MountDietBundle::layout.html.twig' %}
+
+{% block header %}Jedzenie{% endblock %}
+
+{% block content %}
+
+    <form action="{{ path('mount_diet_food_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <input type="submit" value="Dodaj" />
+    </form>
+
+<br>
+
+    <table>
+        <tr>
+            <td>Nazwa</td>
+            <td>Kategoria</td>
+            <td>Kalorie</td>
+            <td>Węglowodany</td>
+            <td>Białka</td>
+            <td>Tłuszcze</td>
+            <td>Porcja</td>
+            <td>&nbsp;</td>
+        </tr>
+
+        {% for entity in food %}
+        <tr>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.category }}</td>
+            <td>{{ entity.calories }}</td>
+            <td>{{ entity.carbs }}</td>
+            <td>{{ entity.protein }}</td>
+            <td>{{ entity.fat }}</td>
+            <td>{{ entity.servingSize }}</td>
+            <td>&nbsp;</td>
+        </tr>
+
+        {% else %}
+            <p>Brak jedzenia.</p>
+        {% endfor %}
+
+    </table>
+
+{% endblock %}
