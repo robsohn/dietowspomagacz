@@ -6,6 +6,15 @@
     <a href="{{ path('mount_diet_food') }}">Jedzenie</a>
     <a href="{{ path('mount_diet_meals') }}">Posiłki</a>
 
+    <h2>{{ day.date.format('Y-m-d') }}</h2>
+
+    <div>
+        Kalorie: {{ day.calories }}
+        Białka: {{ day.protein }}
+        Węglowodany: {{ day.carbs }}
+        Tłuszcze: {{ day.fat }}
+    </div>
+
     <div>
         <h2>Śniadanie</h2>
 
