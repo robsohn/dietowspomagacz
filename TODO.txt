@@ -40,11 +40,15 @@ WORK IN PROGRESS
         - posiłki dnia odpowiadają ID posiłkowi przypisanemu
 
 * Dashboard
-    - Wyświetla wszystkie posiłki dla danego dnia
+
 
 * Import jedzenia
     -- Przygotować CSV file z listą jedzenia
     -- Usunąć Śniadanie II z bazy danych
+
+* Refactor dodawanie posiłków do dnia powinno miec One To Many. Dodac klase DayMeal (day_id, meal_id, meal_type_id)
+* Znalezc sposób aby nie wyświetlać block header jezeli nie jest ustawiony
+* Znalezc sposób aby nie wyświetlać messages jezeli nie sa ustawione
 ================
 
 FOOD

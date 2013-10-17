@@ -1,24 +1,27 @@
 {% extends 'MountDietBundle::layout.html.twig' %}
 
-{% block header %}Dieta Wspomagacz{% endblock %}
-
 {% block content %}
-    <a href="{{ path('mount_diet_food') }}">Jedzenie</a>
-    <a href="{{ path('mount_diet_meals') }}">Posiłki</a>
 
-    <h2>{{ day.date.format('Y-m-d') }}</h2>
+  <h2 class="well">{{ day.date.format('l d/m/Y') }}</h2>
 
-    <div>
-        Kalorie: {{ day.calories }}
-        Białka: {{ day.protein }}
-        Węglowodany: {{ day.carbs }}
-        Tłuszcze: {{ day.fat }}
-    </div>
+  <ul class="list-group">
+    <li class="list-group-item">Kalorie <span class="badge">{{ (day.calories) ? day.calories : 0 }}</span></li>
+    <li class="list-group-item">Białka <span class="badge">{{ day.protein ? day.protein : 0 }}</span></li>
+    <li class="list-group-item">Węglowodany <span class="badge">{{ day.carbs ? day.carbs : 0 }}</span></li>
+    <li class="list-group-item">Tłuszcze <span class="badge">{{ day.fat ? day.fat : 0 }}</span></li>
+  </ul>
 
-    <div>
-        <h2>Śniadanie</h2>
+  <div class="panel-group" id="accordion">
 
-        {% if day.getBreakfast() %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseBreakfast">Śniadanie</a>
+        </h4>
+      </div>
+      <div id="collapseBreakfast" class="panel-collapse collapse">
+        <div class="panel-body">
+          {% if day.getBreakfast() %}
             <h3>{{ day.getBreakfast().getName() }}</h3>
             <div class="day-meal-header">
                 Kalorie: {{ day.getBreakfast().getCalories() }}
@@ -48,15 +51,22 @@
                 </tr>
                 {% endfor %}
             </table>
-        {% else %}
-            <a href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
-        {% endif %}
+          {% else %}
+              <a class="btn btn-default" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+          {% endif %}
+        </div>
+      </div>
     </div>
 
-    <div>
-        <h2>Drugie Śniadanie</h2>
-
-        {% if day.getSecondBreakfast() %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSecondBreakfast">Drugie Śniadanie</a>
+        </h4>
+      </div>
+      <div id="collapseSecondBreakfast" class="panel-collapse collapse">
+        <div class="panel-body">
+          {% if day.getSecondBreakfast() %}
             <h3>{{ day.getSecondBreakfast().getName() }}</h3>
             <div class="day-meal-header">
                 Kalorie: {{ day.getSecondBreakfast().getCalories() }}
@@ -86,15 +96,22 @@
                 </tr>
                 {% endfor %}
             </table>
-        {% else %}
-            <a href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
-        {% endif %}
+          {% else %}
+              <a class="btn btn-default" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+          {% endif %}
+        </div>
+      </div>
     </div>
 
-    <div>
-        <h2>Obiad</h2>
-
-        {% if day.getDinner() %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseDinner">Obiad</a>
+        </h4>
+      </div>
+      <div id="collapseDinner" class="panel-collapse collapse">
+        <div class="panel-body">
+          {% if day.getDinner() %}
             <h3>{{ day.getDinner().getName() }}</h3>
             <div class="day-meal-header">
                 Kalorie: {{ day.getDinner().getCalories() }}
@@ -124,15 +141,22 @@
                 </tr>
                 {% endfor %}
             </table>
-        {% else %}
-            <a href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
-        {% endif %}
+          {% else %}
+              <a class="btn btn-default" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+          {% endif %}
+        </div>
+      </div>
     </div>
 
-    <div>
-        <h2>Podwieczorek</h2>
-
-        {% if day.getTea() %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTea">Podwieczorek</a>
+        </h4>
+      </div>
+      <div id="collapseTea" class="panel-collapse collapse">
+        <div class="panel-body">
+          {% if day.getTea() %}
             <h3>{{ day.getTea().getName() }}</h3>
             <div class="day-meal-header">
                 Kalorie: {{ day.getTea().getCalories() }}
@@ -162,15 +186,22 @@
                 </tr>
                 {% endfor %}
             </table>
-        {% else %}
-            <a href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
-        {% endif %}
+          {% else %}
+              <a class="btn btn-default" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+          {% endif %}
+        </div>
+      </div>
     </div>
 
-    <div>
-        <h2>Kolacja</h2>
-
-        {% if day.getSupper() %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSupper">Kolacja</a>
+        </h4>
+      </div>
+      <div id="collapseSupper" class="panel-collapse collapse">
+        <div class="panel-body">
+          {% if day.getSupper() %}
             <h3>{{ day.getSupper().getName() }}</h3>
             <div class="day-meal-header">
                 Kalorie: {{ day.getSupper().getCalories() }}
@@ -200,8 +231,11 @@
                 </tr>
                 {% endfor %}
             </table>
-        {% else %}
-            <a href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
-        {% endif %}
+          {% else %}
+              <a class="btn btn-default" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+          {% endif %}
+        </div>
+      </div>
     </div>
+  </div>
 {% endblock %}
