@@ -33,7 +33,7 @@
 
         <div class="container">
 
-            {% if header is defined %}<header class="page-header"><h1>{% block header %}{% endblock %}</h1></header>{% endif %}
+            <header class="page-header"><h1>{% block header %}{% endblock %}</h1></header>
 
             <section id="messages">
                 {% if app.session.hasFlash('notice') %}

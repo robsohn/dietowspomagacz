@@ -1,5 +1,17 @@
 {% extends 'MountDietBundle::layout.html.twig' %}
 
+{% form_theme form _self %}
+
+{% block form_row %}
+{% spaceless %}
+    <div class="form-group">
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+
 {% block header %}Nowy Posiłek{% endblock %}
 
 {% block content %}
@@ -12,15 +24,17 @@
             <legend>Jedzenie</legend>
 
             {% for entity in food %}
-                <input type="checkbox" name="food[{{ entity.id }}][selected]" id="food-{{ entity.id }}" value="1">
-                <label for="food-{{ entity.id }}">{{ entity.name }}</label>
-                <input type="text" name="food[{{ entity.id }}][serving]" id="food-{{ entity.id }}-serving">
-                <label for="food-{{ entity.id }}-serving">{{ entity.servingSize }}</label>
-                <br>
+                <div class="col-lg-2 checkbox">
+                    <label for="food-{{ entity.id }}">
+                        <input type="checkbox" name="food[{{ entity.id }}][selected]" id="food-{{ entity.id }}" value="1">
+                        {{ entity.name }}
+                    </label>
+                    <input type="text" class="form-control" name="food[{{ entity.id }}][serving]" id="food-{{ entity.id }}-serving" placeholder="{{ entity.servingSize }}">
+                </div>
             {% endfor %}
         </fieldset>
 
-        <input type="submit" value="Dodaj" />
+        <input type="submit" class="btn btn-primary btn-block" value="Dodaj" />
     </form>
 
 {% endblock %}

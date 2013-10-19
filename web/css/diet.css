@@ -1,0 +1,29 @@
+.meal-summary td {
+    background-color: #428BCA;
+    border-color: #357EBD;
+    border-top-width: 2px;
+    color: #FFFFFF;
+}
+
+.food-form {
+    margin-bottom: 1em;
+}
+
+.table {
+    border-top: 2px solid #999;
+}
+
+fieldset {
+    margin: 1em 0;
+}
+
+.meals li.checkbox {
+    border-bottom: 1px solid #E5E5E5;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+}
+
+.meals li label {
+    font-weight: bold;
+}
+

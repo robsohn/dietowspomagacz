@@ -2,7 +2,7 @@
 
 {% block content %}
 
-  <h2 class="well">{{ day.date.format('l d/m/Y') }}</h2>
+  <h2 class="well">{{ day.date.format('l d.m.Y') }}</h2>
 
   <ul class="list-group">
     <li class="list-group-item">Kalorie <span class="badge">{{ (day.calories) ? day.calories : 0 }}</span></li>
@@ -52,7 +52,7 @@
                 {% endfor %}
             </table>
           {% else %}
-              <a class="btn btn-default" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+              <a class="btn btn-primary btn-block" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
           {% endif %}
         </div>
       </div>
@@ -97,7 +97,7 @@
                 {% endfor %}
             </table>
           {% else %}
-              <a class="btn btn-default" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+              <a class="btn btn-primary btn-block" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
           {% endif %}
         </div>
       </div>
@@ -142,7 +142,7 @@
                 {% endfor %}
             </table>
           {% else %}
-              <a class="btn btn-default" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+              <a class="btn btn-primary btn-block" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
           {% endif %}
         </div>
       </div>
@@ -187,7 +187,7 @@
                 {% endfor %}
             </table>
           {% else %}
-              <a class="btn btn-default" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+              <a class="btn btn-primary btn-block" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
           {% endif %}
         </div>
       </div>
@@ -232,7 +232,7 @@
                 {% endfor %}
             </table>
           {% else %}
-              <a class="btn btn-default" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
+              <a class="btn btn-primary btn-block" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
           {% endif %}
         </div>
       </div>

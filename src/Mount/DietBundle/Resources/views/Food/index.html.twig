@@ -2,25 +2,36 @@
 
 {% block header %}Jedzenie{% endblock %}
 
+{% form_theme form _self %}
+
+{% block form_row %}
+{% spaceless %}
+    <div class="form-group">
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+
 {% block content %}
 
-    <form action="{{ path('mount_diet_food_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('mount_diet_food_create') }}" method="post" {{ form_enctype(form) }} role="form" class="food-form">
         {{ form_widget(form) }}
-        <input type="submit" value="Dodaj" />
+        <button type="submit" class="btn btn-primary btn-block">Dodaj</button>
     </form>
 
-<br>
-
-    <table>
+  <div class="table-responsive">
+    <table class="table">
         <tr>
-            <td>Nazwa</td>
-            <td>Kategoria</td>
-            <td>Kalorie</td>
-            <td>Węglowodany</td>
-            <td>Białka</td>
-            <td>Tłuszcze</td>
-            <td>Porcja</td>
-            <td>&nbsp;</td>
+            <th>Nazwa</th>
+            <th>Kategoria</th>
+            <th>Kalorie</th>
+            <th>Węglowodany</th>
+            <th>Białka</th>
+            <th>Tłuszcze</th>
+            <th>Porcja</th>
+            <th>&nbsp;</th>
         </tr>
 
         {% for entity in food %}
@@ -40,5 +51,5 @@
         {% endfor %}
 
     </table>
-
+  </div>
 {% endblock %}

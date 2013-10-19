@@ -1,50 +1,51 @@
 {% extends 'MountDietBundle::layout.html.twig' %}
 
-{% block header %}Dzień: {{ day.date.format('Y-m-d') }}{% endblock %}
+{% block header %}Dzień: {{ day.date.format('l d.m.Y') }}{% endblock %}
 
 {% block content %}
 
-    <form action="{{ path('mount_diet_days_create') }}" method="post">
+    <form action="{{ path('mount_diet_days_create') }}" method="post" role="form">
         <input type="hidden" name="date" value="{{ day.date.format('Ymd') }}">
-        <fieldset>
-            <div>
-                <label for="day-calories">Kalorie</label>
-                <input type="text" name="day-calories" id="day-calories" value="">
 
-                <label for="day-protein">Białka</label>
-                <input type="text" name="day-protein" id="day-protein" value="">
-
-                <label for="day-carbs">Węglowodany</label>
-                <input type="text" name="day-carbs" id="day-carbs" value="">
-
-                <label for="day-fat">Tłuszcze</label>
-                <input type="text" name="day-fat" id="day-fat" value="">
-            </div>
-
-            <input type="submit" value="Zapisz" />
-        </fieldset>
+        <ul class="list-group">
+          <li class="list-group-item">Kalorie <span class="badge" id="day-calories">0</span></li>
+          <li class="list-group-item">Białka <span class="badge" id="day-protein">0</span></li>
+          <li class="list-group-item">Węglowodany <span class="badge" id="day-carbs">0</span></li>
+          <li class="list-group-item">Tłuszcze <span class="badge" id="day-fat">0</span></li>
+        </ul>
 
         <fieldset>
             <legend>Śniadanie</legend>
 
-            <div class="day-meal-header">
-                Kalorie: 500
-                Białka: 20
-                Węglowodany: 80
-                Tłuszcze: 10
-            </div>
+            <ul class="list-inline">
+              <li>Kalorie <span class="badge" id="breakfast-calories">0</span></li>
+              <li>Białka <span class="badge" id="breakfast-protein">0</span></li>
+              <li>Węglowodany <span class="badge" id="breakfast-carbs">0</span></li>
+              <li>Tłuszcze <span class="badge" id="breakfast-fat">0</span></li>
+            </ul>
 
-            <ul>
+            <button type="button" class="btn btn-default btn-block btn-sm" data-toggle="collapse" data-target="#breakfast-meals">
+              <span class="glyphicon glyphicon-chevron-down"></span>
+            </button>
+
+            <ul id="breakfast-meals" class="collapse list-unstyled meals">
                 {% for entity in breakfast %}
-                <li>
-                    <input type="radio" name="breakfast" id="breakfast-{{ entity.id }}" value="{{ entity.id }}">
-                    <label for="breakfast-{{ entity.id }}">{{ entity.name }}</label>
-                    <div class="day-meal-header">
-                        Kalorie: {{ entity.calories }}
-                        Białka: {{ entity.protein }}
-                        Węglowodany: {{ entity.carbs }}
-                        Tłuszcze: {{ entity.fat }}
-                    </div>
+                <li class="checkbox">
+                    <label for="breakfast-{{ entity.id }}">
+                      <input type="checkbox" name="breakfast" id="breakfast-{{ entity.id }}" value="{{ entity.id }}"
+                        data-calories="{{ entity.calories }}"
+                        data-protein="{{ entity.protein }}"
+                        data-carbs="{{ entity.carbs }}"
+                        data-fat="{{ entity.fat }}"
+                      >
+                      {{ entity.name }}
+                    </label>
+                    <ul class="day-meal-header list-inline small">
+                        <li>Kalorie: {{ entity.calories }}</li>
+                        <li>Białka: {{ entity.protein }}</li>
+                        <li>Węglowodany: {{ entity.carbs }}</li>
+                        <li>Tłuszcze: {{ entity.fat }}</li>
+                    </ul>
                 </li>
                 {% endfor %}
             </ul>
@@ -53,24 +54,35 @@
         <fieldset>
             <legend>II Śniadanie</legend>
 
-            <div>
-                Kalorie: 500
-                Białka: 20
-                Węglowodany: 80
-                Tłuszcze: 10
-            </div>
+            <ul class="list-inline">
+              <li>Kalorie <span class="badge" id="second-breakfast-calories">0</span></li>
+              <li>Białka <span class="badge" id="second-breakfast-protein">0</span></li>
+              <li>Węglowodany <span class="badge" id="second-breakfast-carbs">0</span></li>
+              <li>Tłuszcze <span class="badge" id="second-breakfast-fat">0</span></li>
+            </ul>
 
-            <ul>
+            <button type="button" class="btn btn-default btn-block btn-sm" data-toggle="collapse" data-target="#second-breakfast-meals">
+              <span class="glyphicon glyphicon-chevron-down"></span>
+            </button>
+
+            <ul id="second-breakfast-meals" class="collapse list-unstyled meals">
                 {% for entity in breakfast %}
-                <li>
-                    <input type="radio" name="second_breakfast" id="second_breakfast-{{ entity.id }}" value="{{ entity.id }}">
-                    <label for="second_breakfast-{{ entity.id }}">{{ entity.name }}</label>
-                    <div class="day-meal-header">
-                        Kalorie: {{ entity.calories }}
-                        Białka: {{ entity.protein }}
-                        Węglowodany: {{ entity.carbs }}
-                        Tłuszcze: {{ entity.fat }}
-                    </div>
+                <li class="checkbox">
+                    <label for="second_breakfast-{{ entity.id }}">
+                      <input type="checkbox" name="second_breakfast" id="second_breakfast-{{ entity.id }}" value="{{ entity.id }}"
+                        data-calories="{{ entity.calories }}"
+                        data-protein="{{ entity.protein }}"
+                        data-carbs="{{ entity.carbs }}"
+                        data-fat="{{ entity.fat }}"
+                      >
+                      {{ entity.name }}
+                    </label>
+                    <ul class="day-meal-header list-inline small">
+                        <li>Kalorie {{ entity.calories }}</li>
+                        <li>Białka {{ entity.protein }}</li>
+                        <li>Węglowodany {{ entity.carbs }}</li>
+                        <li>Tłuszcze {{ entity.fat }}</li>
+                    </ul>
                 </li>
                 {% endfor %}
             </ul>
@@ -79,24 +91,35 @@
         <fieldset>
             <legend>Obiad</legend>
 
-            <div>
-                Kalorie: 800
-                Białka: 20
-                Węglowodany: 80
-                Tłuszcze: 10
-            </div>
+            <ul class="list-inline">
+              <li>Kalorie <span class="badge" id="dinner-calories">0</span></li>
+              <li>Białka <span class="badge" id="dinner-protein">0</span></li>
+              <li>Węglowodany <span class="badge" id="dinner-carbs">0</span></li>
+              <li>Tłuszcze <span class="badge" id="dinner-fat">0</span></li>
+            </ul>
 
-            <ul>
+            <button type="button" class="btn btn-default btn-block btn-sm" data-toggle="collapse" data-target="#dinner-meals">
+              <span class="glyphicon glyphicon-chevron-down"></span>
+            </button>
+
+            <ul id="dinner-meals" class="collapse list-unstyled meals">
                 {% for entity in dinner %}
-                <li>
-                    <input type="radio" name="dinner" id="dinner-{{ entity.id }}" value="{{ entity.id }}">
-                    <label for="dinner-{{ entity.id }}">{{ entity.name }}</label>
-                    <div class="day-meal-header">
-                        Kalorie: {{ entity.calories }}
-                        Białka: {{ entity.protein }}
-                        Węglowodany: {{ entity.carbs }}
-                        Tłuszcze: {{ entity.fat }}
-                    </div>
+                <li class="checkbox">
+                    <label for="dinner-{{ entity.id }}">
+                      <input type="checkbox" name="dinner" id="dinner-{{ entity.id }}" value="{{ entity.id }}"
+                        data-calories="{{ entity.calories }}"
+                        data-protein="{{ entity.protein }}"
+                        data-carbs="{{ entity.carbs }}"
+                        data-fat="{{ entity.fat }}"
+                      >
+                      {{ entity.name }}
+                    </label>
+                    <ul class="day-meal-header list-inline small">
+                        <li>Kalorie {{ entity.calories }}</li>
+                        <li>Białka {{ entity.protein }}</li>
+                        <li>Węglowodany {{ entity.carbs }}</li>
+                        <li>Tłuszcze {{ entity.fat }}</li>
+                    </ul>
                 </li>
                 {% endfor %}
             </ul>
@@ -105,24 +128,35 @@
         <fieldset>
             <legend>Podwieczorek</legend>
 
-            <div>
-                Kalorie: 200
-                Białka: 20
-                Węglowodany: 80
-                Tłuszcze: 10
-            </div>
+            <ul class="list-inline">
+              <li>Kalorie <span class="badge" id="tea-calories">0</span></li>
+              <li>Białka <span class="badge" id="tea-protein">0</span></li>
+              <li>Węglowodany <span class="badge" id="tea-carbs">0</span></li>
+              <li>Tłuszcze <span class="badge" id="tea-fat">0</span></li>
+            </ul>
 
-            <ul>
+            <button type="button" class="btn btn-default btn-block btn-sm" data-toggle="collapse" data-target="#tea-meals">
+              <span class="glyphicon glyphicon-chevron-down"></span>
+            </button>
+
+            <ul id="tea-meals" class="collapse list-unstyled meals">
                 {% for entity in tea %}
-                <li>
-                    <input type="radio" name="tea" id="tea-{{ entity.id }}" value="{{ entity.id }}">
-                    <label for="tea-{{ entity.id }}">{{ entity.name }}</label>
-                    <div class="day-meal-header">
-                        Kalorie: {{ entity.calories }}
-                        Białka: {{ entity.protein }}
-                        Węglowodany: {{ entity.carbs }}
-                        Tłuszcze: {{ entity.fat }}
-                    </div>
+                <li class="checkbox">
+                    <label for="tea-{{ entity.id }}">
+                      <input type="checkbox" name="tea" id="tea-{{ entity.id }}" value="{{ entity.id }}"
+                        data-calories="{{ entity.calories }}"
+                        data-protein="{{ entity.protein }}"
+                        data-carbs="{{ entity.carbs }}"
+                        data-fat="{{ entity.fat }}"
+                      >
+                      {{ entity.name }}
+                    </label>
+                    <ul class="day-meal-header list-inline small">
+                        <li>Kalorie {{ entity.calories }}</li>
+                        <li>Białka {{ entity.protein }}</li>
+                        <li>Węglowodany {{ entity.carbs }}</li>
+                        <li>Tłuszcze {{ entity.fat }}</li>
+                    </ul>
                 </li>
                 {% endfor %}
             </ul>
@@ -131,28 +165,42 @@
         <fieldset>
             <legend>Kolacja</legend>
 
-            <div>
-                Kalorie: 200
-                Białka: 20
-                Węglowodany: 80
-                Tłuszcze: 10
-            </div>
+            <ul class="list-inline">
+              <li>Kalorie <span class="badge" id="supper-calories">0</span></li>
+              <li>Białka <span class="badge" id="supper-protein">0</span></li>
+              <li>Węglowodany <span class="badge" id="supper-carbs">0</span></li>
+              <li>Tłuszcze <span class="badge" id="supper-fat">0</span></li>
+            </ul>
 
-            <ul>
+            <button type="button" class="btn btn-default btn-block btn-sm" data-toggle="collapse" data-target="#supper-meals">
+              <span class="glyphicon glyphicon-chevron-down"></span>
+            </button>
+
+            <ul id="supper-meals" class="collapse list-unstyled meals">
                 {% for entity in supper %}
-                <li>
-                    <input type="radio" name="supper" id="supper-{{ entity.id }}" value="{{ entity.id }}">
-                    <label for="supper-{{ entity.id }}">{{ entity.name }}</label>
-                    <div class="day-meal-header">
-                        Kalorie: {{ entity.calories }}
-                        Białka: {{ entity.protein }}
-                        Węglowodany: {{ entity.carbs }}
-                        Tłuszcze: {{ entity.fat }}
-                    </div>
+                <li class="checkbox">
+                    <label for="supper-{{ entity.id }}">
+                      <input type="radio" name="supper" id="supper-{{ entity.id }}" value="{{ entity.id }}"
+                        data-calories="{{ entity.calories }}"
+                        data-protein="{{ entity.protein }}"
+                        data-carbs="{{ entity.carbs }}"
+                        data-fat="{{ entity.fat }}"
+                      >
+                      {{ entity.name }}
+                    </label>
+                    <ul class="day-meal-header list-inline small">
+                        <li>Kalorie {{ entity.calories }}</li>
+                        <li>Białka {{ entity.protein }}</li>
+                        <li>Węglowodany {{ entity.carbs }}</li>
+                        <li>Tłuszcze {{ entity.fat }}</li>
+                    </ul>
                 </li>
                 {% endfor %}
             </ul>
         </fieldset>
 
+        <fieldset>
+          <input type="submit" class="btn btn-primary btn-block" value="Zapisz" />
+        </fieldset>
     </form>
 {% endblock %}
