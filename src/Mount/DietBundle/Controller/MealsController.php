@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Mount\DietBundle\Form\MealType;
 
-use Mount\DietBundle\Entity\MealFood;
+use Mount\DietBundle\Entity\Meal\Food;
 
 /**
  * MealsController
@@ -25,7 +25,7 @@ class MealsController extends Controller
      */
     public function indexAction()
     {
-        $meals = $this->getDoctrine()->getRepository('MountDietBundle:Meal')->findAll();
+        $meals = $this->getDoctrine()->getRepository('MountDietBundle:Meal\Meal')->findAll();
 
         return $this->render(
             'MountDietBundle:Meals:index.html.twig',
@@ -43,7 +43,7 @@ class MealsController extends Controller
         if ($form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            $foodRepository = $em->getRepository('MountDietBundle:Food');
+            $foodRepository = $em->getRepository('MountDietBundle:Food\Food');
 
             $meal = $form->getData();
 
@@ -56,7 +56,7 @@ class MealsController extends Controller
                 if (! isset($data['selected']) || $data['selected'] != 1) {
                     continue;
                 }
-
+// TODO refactor: calculating nutrition should be part of Meal class
                 $food = $foodRepository->find($foodId);
                 $multiplier = $food->getServingSize()->getMultiplier();
 

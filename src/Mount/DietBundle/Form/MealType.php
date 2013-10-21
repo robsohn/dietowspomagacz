@@ -33,7 +33,7 @@ class MealType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Mount\DietBundle\Entity\Meal'
+            'data_class' => 'Mount\DietBundle\Entity\Meal\Meal'
         ));
     }
 

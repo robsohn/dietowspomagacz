@@ -16,7 +16,7 @@ class FoodController extends Controller
      */
     public function indexAction()
     {
-        $food = $this->getDoctrine()->getRepository('MountDietBundle:Food')->findAll();
+        $food = $this->getDoctrine()->getRepository('MountDietBundle:Food\Food')->findAll();
         $form = $this->generateForm();
 
         return $this->render(

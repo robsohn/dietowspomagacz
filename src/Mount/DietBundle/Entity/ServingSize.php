@@ -5,6 +5,8 @@ namespace Mount\DietBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Mount\DietBundle\Entity\Food\Food;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="serving_size")
@@ -24,7 +26,7 @@ class ServingSize
     protected $size;
 
     /**
-     * @ORM\OneToMany(targetEntity="Food", mappedBy="servingSize")
+     * @ORM\OneToMany(targetEntity="\Mount\DietBundle\Entity\Food\Food", mappedBy="servingSize")
      */
     protected $food;
 
@@ -69,10 +71,10 @@ class ServingSize
     /**
      * Add food
      *
-     * @param \Mount\DietBundle\Entity\Food $food
+     * @param \Mount\DietBundle\Entity\Food\Food $food
      * @return ServingSize
      */
-    public function addFood(\Mount\DietBundle\Entity\Food $food)
+    public function addFood(\Mount\DietBundle\Entity\Food\Food $food)
     {
         $this->food[] = $food;
 
@@ -84,7 +86,7 @@ class ServingSize
      *
      * @param \Mount\DietBundle\Entity\Food $food
      */
-    public function removeFood(\Mount\DietBundle\Entity\Food $food)
+    public function removeFood(\Mount\DietBundle\Entity\Food\Food $food)
     {
         $this->food->removeElement($food);
     }

@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Mount\DietBundle\Entity\Day;
+use Mount\DietBundle\Entity\Day\Day;
 
 class DaysController extends Controller
 {
@@ -36,13 +36,13 @@ class DaysController extends Controller
             throw new \InvalidArgumentException('Invalid date');
         }
 
-        $day = $this->getDoctrine()->getRepository('MountDietBundle:Day')->findOneByDate($date);
+        $day = $this->getDoctrine()->getRepository('MountDietBundle:Day\Day')->findOneByDate($date);
 
 // TODO refactor to use date from GET
         $day = new Day();
         $day->setDate($date);
 
-        $mealRepository = $this->getDoctrine()->getRepository('MountDietBundle:Meal');
+        $mealRepository = $this->getDoctrine()->getRepository('MountDietBundle:Meal\Meal');
 
         return $this->render(
             'MountDietBundle:Days:get.html.twig',
@@ -63,7 +63,7 @@ class DaysController extends Controller
         $day = new Day();
         $day->setDateFromString($date);
 
-        $mealRepository = $this->getDoctrine()->getRepository('MountDietBundle:Meal');
+        $mealRepository = $this->getDoctrine()->getRepository('MountDietBundle:Meal\Meal');
 
         $breakfast = $mealRepository->find($request->get('breakfast'));
         $day->setBreakfast($breakfast);

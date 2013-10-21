@@ -74,7 +74,7 @@ class FoodType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Mount\DietBundle\Entity\Food'
+            'data_class' => 'Mount\DietBundle\Entity\Food\Food'
         ));
     }
 

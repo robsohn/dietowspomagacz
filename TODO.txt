@@ -37,7 +37,7 @@ WORK IN PROGRESS
 * Znalezc sposób aby nie wyświetlać messages jezeli nie sa ustawione
 * Dodac Toggle Collapse do tabeli wyswietlajacej posilki i jedzenie
 * Dodac automatyczne zaznaczanie checkboxow jezeli posilek jest przypisany do dnia
-
+* Pomyslec o zmianie wyglady na typowo mobile z panelami jak w Acne
 ================
 
 FOOD

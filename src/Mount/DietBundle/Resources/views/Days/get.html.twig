@@ -37,6 +37,7 @@
                         data-protein="{{ entity.protein }}"
                         data-carbs="{{ entity.carbs }}"
                         data-fat="{{ entity.fat }}"
+                        {% if day.breakfast and day.breakfast.id == entity.id %}checked{% endif %}
                       >
                       {{ entity.name }}
                     </label>
@@ -69,11 +70,13 @@
                 {% for entity in breakfast %}
                 <li class="checkbox">
                     <label for="second_breakfast-{{ entity.id }}">
-                      <input type="checkbox" name="second_breakfast" id="second_breakfast-{{ entity.id }}" value="{{ entity.id }}"
+                      <input type="checkbox" name="second_breakfast" id="second_breakfast-{{ entity.id }}"
+                        value="{{ entity.id }}"
                         data-calories="{{ entity.calories }}"
                         data-protein="{{ entity.protein }}"
                         data-carbs="{{ entity.carbs }}"
                         data-fat="{{ entity.fat }}"
+                        {% if day.secondBreakfast and day.secondBreakfast.id == entity.id %}checked{% endif %}
                       >
                       {{ entity.name }}
                     </label>
@@ -111,6 +114,7 @@
                         data-protein="{{ entity.protein }}"
                         data-carbs="{{ entity.carbs }}"
                         data-fat="{{ entity.fat }}"
+                        {% if day.dinner and day.dinner.id == entity.id %}checked{% endif %}
                       >
                       {{ entity.name }}
                     </label>
@@ -148,6 +152,7 @@
                         data-protein="{{ entity.protein }}"
                         data-carbs="{{ entity.carbs }}"
                         data-fat="{{ entity.fat }}"
+                        {% if day.tea and day.tea.id == entity.id %}checked{% endif %}
                       >
                       {{ entity.name }}
                     </label>
@@ -185,6 +190,7 @@
                         data-protein="{{ entity.protein }}"
                         data-carbs="{{ entity.carbs }}"
                         data-fat="{{ entity.fat }}"
+                        {% if day.supper and day.supper.id == entity.id %}checked{% endif %}
                       >
                       {{ entity.name }}
                     </label>
