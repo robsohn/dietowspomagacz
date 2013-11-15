@@ -9,7 +9,7 @@ use Mount\DietBundle\Entity\Food\Food;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="serving_size")
+ * @ORM\Table(name="serving_sizes")
  */
 class ServingSize
 {
@@ -114,14 +114,10 @@ class ServingSize
     /**
      * Returns multiplier used for calculating calories, carbs, etc per serving size
      *
-     * @return void
+     * @return int
      */
     public function getMultiplier()
     {
-        if ($this->getSize() == 'grams') {
-            return 100;
-        }
-
-        return 1;
+        return 100;
     }
 }

@@ -26,7 +26,7 @@ class DaysController extends Controller
      *
      * @param Request $request
      * @access public
-     * @return void
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function getAction(Request $request)
     {
@@ -38,20 +38,16 @@ class DaysController extends Controller
 
         $day = $this->getDoctrine()->getRepository('MountDietBundle:Day\Day')->findOneByDate($date);
 
-// TODO refactor to use date from GET
-        $day = new Day();
-        $day->setDate($date);
-
-        $mealRepository = $this->getDoctrine()->getRepository('MountDietBundle:Meal\Meal');
+        if (is_null($day)) {
+            $day = new Day();
+            $day->setDate($date);
+        }
 
         return $this->render(
             'MountDietBundle:Days:get.html.twig',
             array(
                 'day' => $day,
-                'breakfast' => $mealRepository->findBreakfast(),
-                'dinner' => $mealRepository->findDinner(),
-                'tea' => $mealRepository->findTea(),
-                'supper' => $mealRepository->findSupper(),
+                'meals' => $this->getDoctrine()->getRepository('MountDietBundle:Meal\Meal')->findAllSortedByName(),
             )
         );
     }
@@ -64,6 +60,9 @@ class DaysController extends Controller
         $day->setDateFromString($date);
 
         $mealRepository = $this->getDoctrine()->getRepository('MountDietBundle:Meal\Meal');
+error_log(print_r($request,1));
+/*
+
 
         $breakfast = $mealRepository->find($request->get('breakfast'));
         $day->setBreakfast($breakfast);
@@ -79,7 +78,7 @@ class DaysController extends Controller
 
         $supper = $mealRepository->find($request->get('supper'));
         $day->setSupper($supper);
-
+*/
         $day->calculateNutrition();
 
         $em = $this->getDoctrine()->getManager();

@@ -20,7 +20,7 @@ class FoodType extends AbstractType
                     )
                 )
             )
-            ->add('calories', 'number',
+            ->add('calories', 'text',
                 array(
                     'label' => false,
                     'attr' => array(
@@ -28,7 +28,7 @@ class FoodType extends AbstractType
                     )
                 )
             )
-            ->add('protein', 'number',
+            ->add('protein', 'text',
                 array(
                     'label' => false,
                     'attr' => array(
@@ -36,7 +36,7 @@ class FoodType extends AbstractType
                     )
                 )
             )
-            ->add('carbs', 'number',
+            ->add('carbs', 'text',
                 array(
                     'label' => false,
                     'attr' => array(
@@ -44,7 +44,7 @@ class FoodType extends AbstractType
                     )
                 )
             )
-            ->add('fat', 'number',
+            ->add('fat', 'text',
                 array(
                     'label' => false,
                     'attr' => array(

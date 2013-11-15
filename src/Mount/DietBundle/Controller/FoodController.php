@@ -12,7 +12,7 @@ class FoodController extends Controller
 {
     /**
      * Lists all food
-     * @return void
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -28,6 +28,11 @@ class FoodController extends Controller
         );
     }
 
+    /**
+     * Saves food
+     * @param  Request $request
+     * @return void
+     */
     public function postAction(Request $request)
     {
         $form = $this->generateForm();
@@ -38,7 +43,7 @@ class FoodController extends Controller
             $em->persist($form->getData());
             $em->flush();
 
-            $this->get('session')->setFlash('notice', 'Jedzenie zostało dodane.');
+            $this->get('session')->setFlash('success', 'Jedzenie zostało dodane.');
         }
 
         // Redirect - This is important to prevent users re-posting the form if they refresh the page

@@ -84,8 +84,6 @@ class Crawler extends \SplObjectStorage
      *
      * @param string      $content A string to parse as HTML/XML
      * @param null|string $type    The content type of the string
-     *
-     * @return null|void
      */
     public function addContent($content, $type = null)
     {
@@ -94,11 +92,11 @@ class Crawler extends \SplObjectStorage
         }
 
         // DOM only for HTML/XML content
-        if (!preg_match('/(x|ht)ml/i', $type, $matches)) {
+        if (!preg_match('/(x|ht)ml/i', $type, $xmlMatches)) {
             return null;
         }
 
-        $charset = 'ISO-8859-1';
+        $charset = null;
         if (false !== $pos = strpos($type, 'charset=')) {
             $charset = substr($type, $pos + 8);
             if (false !== $pos = strpos($charset, ';')) {
@@ -106,7 +104,16 @@ class Crawler extends \SplObjectStorage
             }
         }
 
-        if ('x' === $matches[1]) {
+        if (null === $charset &&
+            preg_match('/\<meta[^\>]+charset *= *["\']?([a-zA-Z\-0-9]+)/i', $content, $matches)) {
+            $charset = $matches[1];
+        }
+
+        if (null === $charset) {
+            $charset = 'ISO-8859-1';
+        }
+
+        if ('x' === $xmlMatches[1]) {
             $this->addXmlContent($content, $charset);
         } else {
             $this->addHtmlContent($content, $charset);
@@ -710,6 +717,11 @@ class Crawler extends \SplObjectStorage
         return sprintf("concat(%s)", implode($parts, ', '));
     }
 
+    /**
+     * @param integer $position
+     *
+     * @return \DOMElement|null
+     */
     private function getNode($position)
     {
         foreach ($this as $i => $node) {
@@ -723,6 +735,12 @@ class Crawler extends \SplObjectStorage
         // @codeCoverageIgnoreEnd
     }
 
+    /**
+     * @param \DOMElement $node
+     * @param string      $siblingDir
+     *
+     * @return array
+     */
     private function sibling($node, $siblingDir = 'nextSibling')
     {
         $nodes = array();

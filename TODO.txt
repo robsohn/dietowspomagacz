@@ -24,20 +24,32 @@ WORK IN PROGRESS
               posiłków
                 - checkbox może użyć atrybut data-* do zapisu wartości odzywczych posiłku
                   (http://html5doctor.com/html5-custom-data-attributes/)
+        - Dodac metode getAllBreakfast() ktora zwraca posilki typu breakfast i second breakfast
 
 * Dashboard
 
 
 * Import jedzenia
     -- Przygotować CSV file z listą jedzenia
-    -- Usunąć Śniadanie II z bazy danych
+    -- CSV file zawierajacy pola
+        meal:name
+        meal:type
+        meal:instructions
+        meal_food:serving (always in grams)
+        food:name
+
+    -- w petli musi jakos rozpoznawac czy nowy rekord ma stworzone juz jedzenie, musi sie to odbywac na podstawie nazwy
+    -- jedzenie dopasowywane na podstawie nazwy
+    -- pusta linia w pliku tworzy nowy Meal objekt
 
 * Refactor dodawanie posiłków do dnia powinno miec One To Many. Dodac klase DayMeal (day_id, meal_id, meal_type_id)
+* Wykombinowac jak zaznaczyc posilki przy wyswietlaniu strony gsy posilek jest przypisany do dnia
 * Znalezc sposób aby nie wyświetlać block header jezeli nie jest ustawiony
 * Znalezc sposób aby nie wyświetlać messages jezeli nie sa ustawione
 * Dodac Toggle Collapse do tabeli wyswietlajacej posilki i jedzenie
 * Dodac automatyczne zaznaczanie checkboxow jezeli posilek jest przypisany do dnia
 * Pomyslec o zmianie wyglady na typowo mobile z panelami jak w Acne
+
 ================
 
 FOOD

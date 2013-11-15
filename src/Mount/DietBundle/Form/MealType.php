@@ -19,14 +19,6 @@ class MealType extends AbstractType
                     )
                 )
             )
-            ->add('type', null,
-                array(
-                    'label' => false,
-                    'attr' => array(
-                        'placeholder' => 'Typ Posiłku', 'class' => 'form-control'
-                    )
-                )
-            )
         ;
     }
 

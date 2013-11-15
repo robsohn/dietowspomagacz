@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Mount\DietBundle\Form\MealType;
 
-use Mount\DietBundle\Entity\Meal\Food;
+use Mount\DietBundle\Entity\Meal\Food as MealFood;
 
 /**
  * MealsController
@@ -21,7 +21,7 @@ class MealsController extends Controller
     /**
      * indexAction
      *
-     * @return
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -35,6 +35,11 @@ class MealsController extends Controller
         );
     }
 
+    /**
+     * Saves meal
+     * @param  Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function postAction(Request $request)
     {
         $form = $this->generateForm();
@@ -47,53 +52,29 @@ class MealsController extends Controller
 
             $meal = $form->getData();
 
-            $calories = 0;
-            $fat = 0;
-            $carbs = 0;
-            $protein = 0;
-
             foreach ($request->get('food') as $foodId => $data) {
                 if (! isset($data['selected']) || $data['selected'] != 1) {
                     continue;
                 }
-// TODO refactor: calculating nutrition should be part of Meal class
+
                 $food = $foodRepository->find($foodId);
-                $multiplier = $food->getServingSize()->getMultiplier();
+// TODO Add error reporting if food not found
 
                 $mealFood = new MealFood();
                 $mealFood->setFood($food);
                 $mealFood->setMeal($meal);
-
                 $mealFood->setServing($data['serving']);
-
-                $mealFoodCalories = ($food->getCalories()*$data['serving']) / $multiplier;
-                $calories += $mealFoodCalories;
-                $mealFood->setCalories($mealFoodCalories);
-
-                $mealFoodCarbs = ($food->getCarbs()*$data['serving']) / $multiplier;
-                $carbs += $mealFoodCarbs;
-                $mealFood->setCarbs($mealFoodCarbs);
-
-                $mealFoodFat = ($food->getFat()*$data['serving']) / $multiplier;
-                $fat += $mealFoodFat;
-                $mealFood->setFat($mealFoodFat);
-
-                $mealFoodProtein = ($food->getProtein()*$data['serving']) / $multiplier;
-                $protein += $mealFoodProtein;
-                $mealFood->setProtein($mealFoodProtein);
+                $mealFood->calculateNutrition();
 
                 $meal->addFood($mealFood);
             }
 
-            $meal->setCalories($calories);
-            $meal->setFat($fat);
-            $meal->setCarbs($carbs);
-            $meal->setProtein($protein);
+            $meal->calculateNutrition();
 
             $em->persist($meal);
             $em->flush();
 
-            $this->get('session')->setFlash('notice', 'Jedzenie zostało dodane.');
+            $this->get('session')->setFlash('success', 'Jedzenie zostało dodane.');
         }
 
         // Redirect - This is important to prevent users re-posting the form if they refresh the page
@@ -103,11 +84,11 @@ class MealsController extends Controller
     /**
      * newAction
      *
-     * @return
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function newAction()
     {
-        $food = $this->getDoctrine()->getRepository('MountDietBundle:Food')->findAll();
+        $food = $this->getDoctrine()->getRepository('MountDietBundle:Food\Food')->findAll();
         $form = $this->generateForm();
 
         return $this->render(

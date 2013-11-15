@@ -37,7 +37,9 @@
 
             <section id="messages">
                 {% if app.session.hasFlash('notice') %}
-                    <div class="notice">{{ app.session.flash('notice') }}</div>
+                    <div class="alert alert-info">{{ app.session.flash('notice') }}</div>
+                {% elseif app.session.hasFlash('success') %}
+                    <div class="alert alert-success">{{ app.session.flash('success') }}</div>
                 {% endif %}
             </section>
             <section id="content">
