@@ -21,36 +21,38 @@
       </div>
       <div id="collapseBreakfast" class="panel-collapse collapse">
         <div class="panel-body">
-          {% if day.getBreakfast() %}
-            <h3>{{ day.getBreakfast().getName() }}</h3>
-            <div class="day-meal-header">
-                Kalorie: {{ day.getBreakfast().getCalories() }}
-                Białka: {{ day.getBreakfast().getProtein() }}
-                Węglowodany: {{ day.getBreakfast().getCarbs() }}
-                Tłuszcze: {{ day.getBreakfast().getFat() }}
-            </div>
+          {% if day.getBreakfast().count() %}
+            {% for breakfast in day.getBreakfast() %}
+                <h3>{{ breakfast.getName() }}</h3>
+                <div class="day-meal-header">
+                    Kalorie: {{ breakfast.getCalories() }}
+                    Białka: {{ breakfast.getProtein() }}
+                    Węglowodany: {{ breakfast.getCarbs() }}
+                    Tłuszcze: {{ breakfast.getFat() }}
+                </div>
 
-            <table>
-                <tr>
-                    <th>Nazwa</th>
-                    <th>Waga</th>
-                    <th>Kalorie</th>
-                    <th>Białka</th>
-                    <th>Węglowodany</th>
-                    <th>Tłuszcze</th>
-                <tr>
+                <table>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Waga</th>
+                        <th>Kalorie</th>
+                        <th>Białka</th>
+                        <th>Węglowodany</th>
+                        <th>Tłuszcze</th>
+                    <tr>
 
-                {% for food in day.getBreakfast().getFood() %}
-                <tr class="meal-food">
-                    <td>{{ food.getFood.name }}</td>
-                    <td>{{ food.serving }}</td>
-                    <td>{{ food.calories }}</td>
-                    <td>{{ food.protein }}</td>
-                    <td>{{ food.carbs }}</td>
-                    <td>{{ food.fat }}</td>
-                </tr>
-                {% endfor %}
-            </table>
+                    {% for food in breakfast.getFood() %}
+                    <tr class="meal-food">
+                        <td>{{ food.getFood.name }}</td>
+                        <td>{{ food.serving }}</td>
+                        <td>{{ food.calories }}</td>
+                        <td>{{ food.protein }}</td>
+                        <td>{{ food.carbs }}</td>
+                        <td>{{ food.fat }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endfor %}
           {% else %}
               <a class="btn btn-primary btn-block" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
           {% endif %}
@@ -66,36 +68,38 @@
       </div>
       <div id="collapseSecondBreakfast" class="panel-collapse collapse">
         <div class="panel-body">
-          {% if day.getSecondBreakfast() %}
-            <h3>{{ day.getSecondBreakfast().getName() }}</h3>
-            <div class="day-meal-header">
-                Kalorie: {{ day.getSecondBreakfast().getCalories() }}
-                Białka: {{ day.getSecondBreakfast().getProtein() }}
-                Węglowodany: {{ day.getSecondBreakfast().getCarbs() }}
-                Tłuszcze: {{ day.getSecondBreakfast().getFat() }}
-            </div>
+          {% if day.getSecondBreakfast().count() %}
+            {% for secondBreakfast in day.getSecondBreakfast() %}
+                <h3>{{ secondBreakfast.getName() }}</h3>
+                <div class="day-meal-header">
+                    Kalorie: {{ secondBreakfast.getCalories() }}
+                    Białka: {{ secondBreakfast.getProtein() }}
+                    Węglowodany: {{ secondBreakfast.getCarbs() }}
+                    Tłuszcze: {{ secondBreakfast.getFat() }}
+                </div>
 
-            <table>
-                <tr>
-                    <th>Nazwa</th>
-                    <th>Waga</th>
-                    <th>Kalorie</th>
-                    <th>Białka</th>
-                    <th>Węglowodany</th>
-                    <th>Tłuszcze</th>
-                <tr>
+                <table>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Waga</th>
+                        <th>Kalorie</th>
+                        <th>Białka</th>
+                        <th>Węglowodany</th>
+                        <th>Tłuszcze</th>
+                    <tr>
 
-                {% for food in day.getSecondBreakfast().getFood() %}
-                <tr class="meal-food">
-                    <td>{{ food.getFood.name }}</td>
-                    <td>{{ food.serving }}</td>
-                    <td>{{ food.calories }}</td>
-                    <td>{{ food.protein }}</td>
-                    <td>{{ food.carbs }}</td>
-                    <td>{{ food.fat }}</td>
-                </tr>
-                {% endfor %}
-            </table>
+                    {% for food in secondBreakfast.getFood() %}
+                    <tr class="meal-food">
+                        <td>{{ food.getFood.name }}</td>
+                        <td>{{ food.serving }}</td>
+                        <td>{{ food.calories }}</td>
+                        <td>{{ food.protein }}</td>
+                        <td>{{ food.carbs }}</td>
+                        <td>{{ food.fat }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endfor %}
           {% else %}
               <a class="btn btn-primary btn-block" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
           {% endif %}
@@ -111,36 +115,38 @@
       </div>
       <div id="collapseDinner" class="panel-collapse collapse">
         <div class="panel-body">
-          {% if day.getDinner() %}
-            <h3>{{ day.getDinner().getName() }}</h3>
-            <div class="day-meal-header">
-                Kalorie: {{ day.getDinner().getCalories() }}
-                Białka: {{ day.getDinner().getProtein() }}
-                Węglowodany: {{ day.getDinner().getCarbs() }}
-                Tłuszcze: {{ day.getDinner().getFat() }}
-            </div>
+          {% if day.getDinner().count() %}
+            {% for dinner in day.getDinner() %}
+                <h3>{{ dinner.getName() }}</h3>
+                <div class="day-meal-header">
+                    Kalorie: {{ dinner.getCalories() }}
+                    Białka: {{ dinner.getProtein() }}
+                    Węglowodany: {{ dinner.getCarbs() }}
+                    Tłuszcze: {{ dinner.getFat() }}
+                </div>
 
-            <table>
-                <tr>
-                    <th>Nazwa</th>
-                    <th>Waga</th>
-                    <th>Kalorie</th>
-                    <th>Białka</th>
-                    <th>Węglowodany</th>
-                    <th>Tłuszcze</th>
-                <tr>
+                <table>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Waga</th>
+                        <th>Kalorie</th>
+                        <th>Białka</th>
+                        <th>Węglowodany</th>
+                        <th>Tłuszcze</th>
+                    <tr>
 
-                {% for food in day.getDinner().getFood() %}
-                <tr class="meal-food">
-                    <td>{{ food.getFood.name }}</td>
-                    <td>{{ food.serving }}</td>
-                    <td>{{ food.calories }}</td>
-                    <td>{{ food.protein }}</td>
-                    <td>{{ food.carbs }}</td>
-                    <td>{{ food.fat }}</td>
-                </tr>
-                {% endfor %}
-            </table>
+                    {% for food in dinner.getFood() %}
+                    <tr class="meal-food">
+                        <td>{{ food.getFood.name }}</td>
+                        <td>{{ food.serving }}</td>
+                        <td>{{ food.calories }}</td>
+                        <td>{{ food.protein }}</td>
+                        <td>{{ food.carbs }}</td>
+                        <td>{{ food.fat }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endfor %}
           {% else %}
               <a class="btn btn-primary btn-block" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
           {% endif %}
@@ -156,36 +162,38 @@
       </div>
       <div id="collapseTea" class="panel-collapse collapse">
         <div class="panel-body">
-          {% if day.getTea() %}
-            <h3>{{ day.getTea().getName() }}</h3>
-            <div class="day-meal-header">
-                Kalorie: {{ day.getTea().getCalories() }}
-                Białka: {{ day.getTea().getProtein() }}
-                Węglowodany: {{ day.getTea().getCarbs() }}
-                Tłuszcze: {{ day.getTea().getFat() }}
-            </div>
+          {% if day.getTea().count() %}
+            {% for tea in day.getTea() %}
+                <h3>{{ tea.getName() }}</h3>
+                <div class="day-meal-header">
+                    Kalorie: {{ tea.getCalories() }}
+                    Białka: {{ tea.getProtein() }}
+                    Węglowodany: {{ tea.getCarbs() }}
+                    Tłuszcze: {{ tea.getFat() }}
+                </div>
 
-            <table>
-                <tr>
-                    <th>Nazwa</th>
-                    <th>Waga</th>
-                    <th>Kalorie</th>
-                    <th>Białka</th>
-                    <th>Węglowodany</th>
-                    <th>Tłuszcze</th>
-                <tr>
+                <table>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Waga</th>
+                        <th>Kalorie</th>
+                        <th>Białka</th>
+                        <th>Węglowodany</th>
+                        <th>Tłuszcze</th>
+                    <tr>
 
-                {% for food in day.getTea().getFood() %}
-                <tr class="meal-food">
-                    <td>{{ food.getFood.name }}</td>
-                    <td>{{ food.serving }}</td>
-                    <td>{{ food.calories }}</td>
-                    <td>{{ food.protein }}</td>
-                    <td>{{ food.carbs }}</td>
-                    <td>{{ food.fat }}</td>
-                </tr>
-                {% endfor %}
-            </table>
+                    {% for food in tea.getFood() %}
+                    <tr class="meal-food">
+                        <td>{{ food.getFood.name }}</td>
+                        <td>{{ food.serving }}</td>
+                        <td>{{ food.calories }}</td>
+                        <td>{{ food.protein }}</td>
+                        <td>{{ food.carbs }}</td>
+                        <td>{{ food.fat }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endfor %}
           {% else %}
               <a class="btn btn-primary btn-block" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
           {% endif %}
@@ -201,36 +209,38 @@
       </div>
       <div id="collapseSupper" class="panel-collapse collapse">
         <div class="panel-body">
-          {% if day.getSupper() %}
-            <h3>{{ day.getSupper().getName() }}</h3>
-            <div class="day-meal-header">
-                Kalorie: {{ day.getSupper().getCalories() }}
-                Białka: {{ day.getSupper().getProtein() }}
-                Węglowodany: {{ day.getSupper().getCarbs() }}
-                Tłuszcze: {{ day.getSupper().getFat() }}
-            </div>
+          {% if day.getSupper().count() %}
+            {% for supper in day.getSupper() %}
+                <h3>{{ supper.getName() }}</h3>
+                <div class="day-meal-header">
+                    Kalorie: {{ supper.getCalories() }}
+                    Białka: {{ supper.getProtein() }}
+                    Węglowodany: {{ supper.getCarbs() }}
+                    Tłuszcze: {{ supper.getFat() }}
+                </div>
 
-            <table>
-                <tr>
-                    <th>Nazwa</th>
-                    <th>Waga</th>
-                    <th>Kalorie</th>
-                    <th>Białka</th>
-                    <th>Węglowodany</th>
-                    <th>Tłuszcze</th>
-                <tr>
+                <table>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Waga</th>
+                        <th>Kalorie</th>
+                        <th>Białka</th>
+                        <th>Węglowodany</th>
+                        <th>Tłuszcze</th>
+                    <tr>
 
-                {% for food in day.getSupper().getFood() %}
-                <tr class="meal-food">
-                    <td>{{ food.getFood.name }}</td>
-                    <td>{{ food.serving }}</td>
-                    <td>{{ food.calories }}</td>
-                    <td>{{ food.protein }}</td>
-                    <td>{{ food.carbs }}</td>
-                    <td>{{ food.fat }}</td>
-                </tr>
+                    {% for food in supper.getFood() %}
+                    <tr class="meal-food">
+                        <td>{{ food.getFood.name }}</td>
+                        <td>{{ food.serving }}</td>
+                        <td>{{ food.calories }}</td>
+                        <td>{{ food.protein }}</td>
+                        <td>{{ food.carbs }}</td>
+                        <td>{{ food.fat }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
                 {% endfor %}
-            </table>
           {% else %}
               <a class="btn btn-primary btn-block" href="{{ path('mount_diet_days_day', {'date': "now"|date("Ymd")}) }}">Dodaj posiłki</a>
           {% endif %}

@@ -15,10 +15,16 @@ class DaysController extends Controller
      *
      * @access public
      * @return void
+     *
+     * @todo  Implement calendar viewing
      */
     public function indexAction()
     {
-        echo 'done';
+        $response = $this->forward('MountDietBundle:Days:get');
+
+        // ... further modify the response or return it directly
+
+        return $response;
     }
 
     /**
@@ -61,6 +67,22 @@ class DaysController extends Controller
 
         $mealRepository = $this->getDoctrine()->getRepository('MountDietBundle:Meal\Meal');
 error_log(print_r($request,1));
+
+        $breakfast = $request->get('breakfast');
+        if (count($breakfast) > 0) {
+            $mealType = $this->getDoctrine()->getRepository('MountDietBundle:Meal\Type')->findBreakfast();
+            foreach ($breakfast as $meal) {
+
+dayMeal
+day
+meal
+type
+
+$day->addMeal($dayMeal);
+
+
+            }
+        }
 /*
 
 

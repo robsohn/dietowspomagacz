@@ -1,13 +1,21 @@
 # Bootstrap
 app/bootstrap*
+app/config/parameters.yml
 
 # Symfony directories
 */logs/*
 */cache/*
+!app/cache/.gitkeep
+!app/logs/.gitkeep
 web/uploads/*
 web/bundles/*
+/vendor/
+/build/
+/bin/
+/composer.phar
 
 # Sublime
 diet.sublime-project
 diet.sublime-workspace
 
+.DS_Store
