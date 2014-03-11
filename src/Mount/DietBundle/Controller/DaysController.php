@@ -107,7 +107,7 @@ $day->addMeal($dayMeal);
         $em->persist($day);
         $em->flush();
 
-        $this->get('session')->setFlash('notice', 'Zapisano dzień.');
+        $this->get('session')->getFlashBag()->add('notice', 'Zapisano dzień.');
 
         // Redirect - This is important to prevent users re-posting the form if they refresh the page
         return $this->redirect($this->generateUrl('mount_diet_days'), 201);

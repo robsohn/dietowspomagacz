@@ -23,6 +23,13 @@ class Food
     protected $name;
 
     /**
+     * It's md5 of the name
+     *
+     * @ORM\Column(type="string", length=128)
+     */
+    protected $handle;
+
+    /**
      * @ORM\Column(type="float")
      */
     protected $calories;
@@ -223,5 +230,27 @@ class Food
     public function getServingSize()
     {
         return $this->servingSize;
+    }
+
+    /**
+     * Set handle
+     *
+     * @param string $handle
+     * @return Food
+     */
+    public function setHandle($handle)
+    {
+        $this->handle = $handle;
+        return $this;
+    }
+
+    /**
+     * Get handle
+     *
+     * @return string 
+     */
+    public function getHandle()
+    {
+        return $this->handle;
     }
 }

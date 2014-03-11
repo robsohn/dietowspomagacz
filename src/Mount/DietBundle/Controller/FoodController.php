@@ -43,7 +43,7 @@ class FoodController extends Controller
             $em->persist($form->getData());
             $em->flush();
 
-            $this->get('session')->setFlash('success', 'Jedzenie zostało dodane.');
+            $this->get('session')->getFlashBag()->add('success', 'Jedzenie zostało dodane.');
         }
 
         // Redirect - This is important to prevent users re-posting the form if they refresh the page

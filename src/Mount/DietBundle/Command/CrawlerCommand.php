@@ -35,7 +35,7 @@ class CrawlerCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $client = new Client('http://www.tabele-kalorii.pl');
-        $em = $this->getContainer()->get('doctrine')->getEntityManager();
+        $em = $this->getContainer()->get('doctrine')->getManager();
 
         $servingSize = $this->getContainer()->get('doctrine')
                 ->getRepository('MountDietBundle:ServingSize')->find(1);
