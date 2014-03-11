@@ -8,7 +8,7 @@ app/config/parameters.yml
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 web/uploads/*
-web/bundles/*
+web/bundles/
 /vendor/
 /build/
 /bin/
