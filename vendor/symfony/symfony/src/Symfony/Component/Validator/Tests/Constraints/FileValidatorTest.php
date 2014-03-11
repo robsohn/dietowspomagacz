@@ -24,14 +24,10 @@ abstract class FileValidatorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        if (!class_exists('Symfony\Component\HttpFoundation\File\UploadedFile')) {
-            $this->markTestSkipped('The "HttpFoundation" component is not available');
-        }
-
         $this->context = $this->getMock('Symfony\Component\Validator\ExecutionContext', array(), array(), '', false);
         $this->validator = new FileValidator();
         $this->validator->initialize($this->context);
-        $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'FileValidatorTest';
+        $this->path = sys_get_temp_dir().DIRECTORY_SEPARATOR.'FileValidatorTest';
         $this->file = fopen($this->path, 'w');
     }
 
@@ -82,7 +78,7 @@ abstract class FileValidatorTest extends \PHPUnit_Framework_TestCase
         $this->context->expects($this->never())
             ->method('addViolation');
 
-        $file = new UploadedFile($this->path, 'originalName');
+        $file = new UploadedFile($this->path, 'originalName', null, null, null, true);
         $this->validator->validate($file, new File());
     }
 

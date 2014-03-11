@@ -49,7 +49,7 @@ class OutputFormatter implements OutputFormatterInterface
      *
      * @api
      */
-    public function __construct($decorated = null, array $styles = array())
+    public function __construct($decorated = false, array $styles = array())
     {
         $this->decorated = (Boolean) $decorated;
 
@@ -130,7 +130,7 @@ class OutputFormatter implements OutputFormatterInterface
     public function getStyle($name)
     {
         if (!$this->hasStyle($name)) {
-            throw new \InvalidArgumentException('Undefined style: '.$name);
+            throw new \InvalidArgumentException(sprintf('Undefined style: %s', $name));
         }
 
         return $this->styles[strtolower($name)];

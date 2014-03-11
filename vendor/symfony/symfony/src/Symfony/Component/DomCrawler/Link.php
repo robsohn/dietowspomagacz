@@ -112,12 +112,17 @@ class Link
         if ('?' === $uri[0]) {
             $baseUri = $this->currentUri;
 
-            // remove the query string from the current uri
+            // remove the query string from the current URI
             if (false !== $pos = strpos($baseUri, '?')) {
                 $baseUri = substr($baseUri, 0, $pos);
             }
 
             return $baseUri.$uri;
+        }
+
+        // absolute URL with relative schema
+        if (0 === strpos($uri, '//')) {
+            return preg_replace('#^([^/]*)//.*$#', '$1', $this->currentUri).$uri;
         }
 
         $baseUri = preg_replace('#^(.*?//[^/]*)(?:\/.*)?$#', '$1', $this->currentUri);
@@ -135,7 +140,7 @@ class Link
     }
 
     /**
-     * Returns raw uri data.
+     * Returns raw URI data.
      *
      * @return string
      */

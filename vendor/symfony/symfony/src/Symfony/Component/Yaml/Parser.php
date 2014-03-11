@@ -2,6 +2,7 @@
 
 /*
  * This file is part of the Symfony package.
+ *
  * (c) Fabien Potencier <fabien@symfony.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -374,7 +375,9 @@ class Parser
     /**
      * Parses a YAML value.
      *
-     * @param string $value A YAML value
+     * @param string  $value                  A YAML value
+     * @param Boolean $exceptionOnInvalidType True if an exception must be thrown on invalid types false otherwise
+     * @param Boolean $objectSupport          True if object support is enabled, false otherwise
      *
      * @return mixed  A PHP value
      *

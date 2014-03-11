@@ -5,7 +5,7 @@ namespace spec\Mount\DietBundle\Entity\Meal;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-use \Mount\DietBundle\Entity\Food\Food;
+use \Mount\DietBundle\Entity\Meal\Food;
 
 class MealSpec extends ObjectBehavior
 {

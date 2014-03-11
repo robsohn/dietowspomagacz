@@ -171,7 +171,7 @@ class ObjectChoiceListTest extends AbstractChoiceListTest
     }
 
     /**
-     * @expectedException \Symfony\Component\Form\Exception\Exception
+     * @expectedException \Symfony\Component\Form\Exception\StringCastException
      */
     public function testInitArrayThrowsExceptionIfToStringNotFound()
     {

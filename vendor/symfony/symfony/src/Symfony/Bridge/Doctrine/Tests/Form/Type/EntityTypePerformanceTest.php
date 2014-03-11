@@ -50,22 +50,6 @@ class EntityTypePerformanceTest extends FormPerformanceTestCase
 
     protected function setUp()
     {
-        if (!class_exists('Symfony\Component\Form\Form')) {
-            $this->markTestSkipped('The "Form" component is not available');
-        }
-
-        if (!class_exists('Doctrine\DBAL\Platforms\MySqlPlatform')) {
-            $this->markTestSkipped('Doctrine DBAL is not available.');
-        }
-
-        if (!class_exists('Doctrine\Common\Version')) {
-            $this->markTestSkipped('Doctrine Common is not available.');
-        }
-
-        if (!class_exists('Doctrine\ORM\EntityManager')) {
-            $this->markTestSkipped('Doctrine ORM is not available.');
-        }
-
         $this->em = DoctrineOrmTestCase::createTestEntityManager();
 
         parent::setUp();
@@ -120,7 +104,7 @@ class EntityTypePerformanceTest extends FormPerformanceTestCase
      */
     public function testCollapsedEntityFieldWithChoices()
     {
-        $choices = $this->em->createQuery('SELECT c FROM ' . self::ENTITY_CLASS . ' c')->getResult();
+        $choices = $this->em->createQuery('SELECT c FROM '.self::ENTITY_CLASS.' c')->getResult();
         $this->setMaxRunningTime(1);
 
         for ($i = 0; $i < 40; ++$i) {
@@ -139,7 +123,7 @@ class EntityTypePerformanceTest extends FormPerformanceTestCase
      */
     public function testCollapsedEntityFieldWithPreferredChoices()
     {
-        $choices = $this->em->createQuery('SELECT c FROM ' . self::ENTITY_CLASS . ' c')->getResult();
+        $choices = $this->em->createQuery('SELECT c FROM '.self::ENTITY_CLASS.' c')->getResult();
         $this->setMaxRunningTime(1);
 
         for ($i = 0; $i < 40; ++$i) {

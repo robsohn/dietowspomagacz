@@ -30,22 +30,6 @@ class FormExtensionDivLayoutTest extends AbstractDivLayoutTest
 
     protected function setUp()
     {
-        if (!class_exists('Symfony\Component\Locale\Locale')) {
-            $this->markTestSkipped('The "Locale" component is not available');
-        }
-
-        if (!class_exists('Symfony\Component\EventDispatcher\EventDispatcher')) {
-            $this->markTestSkipped('The "EventDispatcher" component is not available');
-        }
-
-        if (!class_exists('Symfony\Component\Form\Form')) {
-            $this->markTestSkipped('The "Form" component is not available');
-        }
-
-        if (!class_exists('Twig_Environment')) {
-            $this->markTestSkipped('Twig is not available.');
-        }
-
         parent::setUp();
 
         $rendererEngine = new TwigRendererEngine(array(
@@ -148,9 +132,14 @@ class FormExtensionDivLayoutTest extends AbstractDivLayoutTest
      */
     public function testIsChoiceSelected($expected, $choice, $value)
     {
-        $choice = new ChoiceView($choice, $choice, $choice . ' label');
+        $choice = new ChoiceView($choice, $choice, $choice.' label');
 
         $this->assertSame($expected, $this->extension->isSelectedChoice($choice, $value));
+    }
+
+    protected function renderForm(FormView $view, array $vars = array())
+    {
+        return (string) $this->extension->renderer->renderBlock($view, 'form', $vars);
     }
 
     protected function renderEnctype(FormView $view)
@@ -185,6 +174,16 @@ class FormExtensionDivLayoutTest extends AbstractDivLayoutTest
     protected function renderRest(FormView $view, array $vars = array())
     {
         return (string) $this->extension->renderer->searchAndRenderBlock($view, 'rest', $vars);
+    }
+
+    protected function renderStart(FormView $view, array $vars = array())
+    {
+        return (string) $this->extension->renderer->renderBlock($view, 'form_start', $vars);
+    }
+
+    protected function renderEnd(FormView $view, array $vars = array())
+    {
+        return (string) $this->extension->renderer->renderBlock($view, 'form_end', $vars);
     }
 
     protected function setTheme(FormView $view, array $themes)

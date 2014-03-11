@@ -11,23 +11,24 @@
 
 namespace Symfony\Component\HttpKernel\DataCollector;
 
-use Symfony\Component\HttpKernel\DataCollector\DataCollector;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * TimeDataCollector.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class TimeDataCollector extends DataCollector
+class TimeDataCollector extends DataCollector implements LateDataCollectorInterface
 {
     protected $kernel;
+    protected $stopwatch;
 
-    public function __construct(KernelInterface $kernel = null)
+    public function __construct(KernelInterface $kernel = null, $stopwatch = null)
     {
         $this->kernel = $kernel;
+        $this->stopwatch = $stopwatch;
     }
 
     /**
@@ -35,10 +36,28 @@ class TimeDataCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
+        if (null !== $this->kernel) {
+            $startTime = $this->kernel->getStartTime();
+        } else {
+            $startTime = $request->server->get('REQUEST_TIME_FLOAT', $request->server->get('REQUEST_TIME'));
+        }
+
         $this->data = array(
-            'start_time' => (null !== $this->kernel ? $this->kernel->getStartTime() : $_SERVER['REQUEST_TIME']) * 1000,
+            'token'      => $response->headers->get('X-Debug-Token'),
+            'start_time' => $startTime * 1000,
             'events'     => array(),
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function lateCollect()
+    {
+        if (null !== $this->stopwatch && isset($this->data['token'])) {
+            $this->setEvents($this->stopwatch->getSectionEvents($this->data['token']));
+        }
+        unset($this->data['token']);
     }
 
     /**

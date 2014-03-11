@@ -24,6 +24,7 @@ use Doctrine\DBAL\Schema\TableDiff;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\ForeignKeyConstraint;
 use Doctrine\DBAL\Schema\Index;
+use Doctrine\DBAL\Schema\Identifier;
 use Doctrine\DBAL\Schema\Constraint;
 
 /**
@@ -133,6 +134,22 @@ class SqlitePlatform extends AbstractPlatform
     /**
      * {@inheritDoc}
      */
+    public function getDateAddHourExpression($date, $hours)
+    {
+        return "DATETIME(" . $date . ",'+". $hours . " hour')";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDateSubHourExpression($date, $hours)
+    {
+        return "DATETIME(" . $date . ",'-". $hours . " hour')";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getDateAddDaysExpression($date, $days)
     {
         return "DATE(" . $date . ",'+". $days . " day')";
@@ -208,7 +225,7 @@ class SqlitePlatform extends AbstractPlatform
      */
     public function getIntegerTypeDeclarationSQL(array $field)
     {
-        return $this->_getCommonIntegerTypeDeclarationSQL($field);
+        return 'INTEGER' . $this->_getCommonIntegerTypeDeclarationSQL($field);
     }
 
     /**
@@ -216,7 +233,7 @@ class SqlitePlatform extends AbstractPlatform
      */
     public function getBigIntTypeDeclarationSQL(array $field)
     {
-        return $this->_getCommonIntegerTypeDeclarationSQL($field);
+        return 'BIGINT' . $this->_getCommonIntegerTypeDeclarationSQL($field);
     }
 
     /**
@@ -224,7 +241,7 @@ class SqlitePlatform extends AbstractPlatform
      */
     public function getTinyIntTypeDeclarationSql(array $field)
     {
-        return $this->_getCommonIntegerTypeDeclarationSQL($field);
+        return 'TINYINT' . $this->_getCommonIntegerTypeDeclarationSQL($field);
     }
 
     /**
@@ -232,7 +249,7 @@ class SqlitePlatform extends AbstractPlatform
      */
     public function getSmallIntTypeDeclarationSQL(array $field)
     {
-        return $this->_getCommonIntegerTypeDeclarationSQL($field);
+        return 'SMALLINT' . $this->_getCommonIntegerTypeDeclarationSQL($field);
     }
 
     /**
@@ -240,7 +257,7 @@ class SqlitePlatform extends AbstractPlatform
      */
     public function getMediumIntTypeDeclarationSql(array $field)
     {
-        return $this->_getCommonIntegerTypeDeclarationSQL($field);
+        return 'MEDIUMINT' . $this->_getCommonIntegerTypeDeclarationSQL($field);
     }
 
     /**
@@ -272,7 +289,12 @@ class SqlitePlatform extends AbstractPlatform
      */
     protected function _getCommonIntegerTypeDeclarationSQL(array $columnDef)
     {
-        return 'INTEGER';
+        // sqlite autoincrement is implicit for integer PKs, but not when the field is unsigned
+        if ( ! empty($columnDef['autoincrement'])) {
+            return '';
+        }
+
+        return ! empty($columnDef['unsigned']) ? ' UNSIGNED' : '';
     }
 
     /**
@@ -345,6 +367,30 @@ class SqlitePlatform extends AbstractPlatform
     }
 
     /**
+     * {@inheritdoc}
+     */
+    protected function getBinaryTypeDeclarationSQLSnippet($length, $fixed)
+    {
+        return 'BLOB';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBinaryMaxLength()
+    {
+        return 0;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBinaryDefaultLength()
+    {
+        return 0;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getClobTypeDeclarationSQL(array $field)
@@ -369,7 +415,7 @@ class SqlitePlatform extends AbstractPlatform
     {
         $table = str_replace('.', '__', $table);
 
-        return "PRAGMA table_info($table)";
+        return "PRAGMA table_info('$table')";
     }
 
     /**
@@ -379,7 +425,7 @@ class SqlitePlatform extends AbstractPlatform
     {
         $table = str_replace('.', '__', $table);
 
-        return "PRAGMA index_list($table)";
+        return "PRAGMA index_list('$table')";
     }
 
     /**
@@ -440,6 +486,14 @@ class SqlitePlatform extends AbstractPlatform
     /**
      * {@inheritDoc}
      */
+    public function supportsColumnCollation()
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getName()
     {
         return 'sqlite';
@@ -452,7 +506,7 @@ class SqlitePlatform extends AbstractPlatform
     {
         $tableName = str_replace('.', '__', $tableName);
 
-        return 'DELETE FROM '.$tableName;
+        return 'DELETE FROM ' . $tableName;
     }
 
     /**
@@ -543,7 +597,6 @@ class SqlitePlatform extends AbstractPlatform
             'decimal'          => 'decimal',
             'numeric'          => 'decimal',
             'blob'             => 'blob',
-            'integer unsigned' => 'integer',
         );
     }
 
@@ -685,7 +738,7 @@ class SqlitePlatform extends AbstractPlatform
     {
         $table = str_replace('.', '__', $table);
 
-        return "PRAGMA foreign_key_list($table)";
+        return "PRAGMA foreign_key_list('$table')";
     }
 
     /**
@@ -788,7 +841,7 @@ class SqlitePlatform extends AbstractPlatform
             $sql[] = $this->getDropTableSQL($dataTable);
 
             if ($diff->newName && $diff->newName != $diff->name) {
-                $renamedTable = new Table($diff->newName);
+                $renamedTable = new Identifier($diff->newName);
                 $sql[] = 'ALTER TABLE '.$newTable->getQuotedName($this).' RENAME TO '.$renamedTable->getQuotedName($this);
             }
 
@@ -808,6 +861,7 @@ class SqlitePlatform extends AbstractPlatform
         if ( ! empty($diff->renamedColumns) || ! empty($diff->addedForeignKeys) || ! empty($diff->addedIndexes)
                 || ! empty($diff->changedColumns) || ! empty($diff->changedForeignKeys) || ! empty($diff->changedIndexes)
                 || ! empty($diff->removedColumns) || ! empty($diff->removedForeignKeys) || ! empty($diff->removedIndexes)
+                || ! empty($diff->renamedIndexes)
         ) {
             return false;
         }
@@ -843,7 +897,7 @@ class SqlitePlatform extends AbstractPlatform
 
         if ( ! $this->onSchemaAlterTable($diff, $tableSql)) {
             if ($diff->newName !== false) {
-                $newTable = new Table($diff->newName);
+                $newTable = new Identifier($diff->newName);
                 $sql[] = 'ALTER TABLE '.$table->getQuotedName($this).' RENAME TO '.$newTable->getQuotedName($this);
             }
         }
@@ -928,7 +982,7 @@ class SqlitePlatform extends AbstractPlatform
             }
         }
 
-        foreach (array_merge($diff->changedIndexes, $diff->addedIndexes) as $index) {
+        foreach (array_merge($diff->changedIndexes, $diff->addedIndexes, $diff->renamedIndexes) as $index) {
             $indexName = strtolower($index->getName());
             if (strlen($indexName)) {
                 $indexes[$indexName] = $index;
@@ -1008,4 +1062,3 @@ class SqlitePlatform extends AbstractPlatform
         return $primaryIndex;
     }
 }
-

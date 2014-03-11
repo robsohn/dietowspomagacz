@@ -26,17 +26,21 @@ class FixRadioInputListener implements EventSubscriberInterface
 {
     private $choiceList;
 
+    private $placeholderPresent;
+
     /**
      * Constructor.
      *
      * @param ChoiceListInterface $choiceList
+     * @param Boolean             $placeholderPresent
      */
-    public function __construct(ChoiceListInterface $choiceList)
+    public function __construct(ChoiceListInterface $choiceList, $placeholderPresent)
     {
         $this->choiceList = $choiceList;
+        $this->placeholderPresent = $placeholderPresent;
     }
 
-    public function preBind(FormEvent $event)
+    public function preSubmit(FormEvent $event)
     {
         $data = $event->getData();
 
@@ -48,7 +52,7 @@ class FixRadioInputListener implements EventSubscriberInterface
             $data = array($index => $data);
         } elseif ('' === $data || null === $data) {
             // Empty values are always accepted.
-            $data = array();
+            $data = $this->placeholderPresent ? array('placeholder' => '') : array();
         }
 
         // Else leave the data unchanged to provoke an error during submission
@@ -56,8 +60,19 @@ class FixRadioInputListener implements EventSubscriberInterface
         $event->setData($data);
     }
 
+    /**
+     * Alias of {@link preSubmit()}.
+     *
+     * @deprecated Deprecated since version 2.3, to be removed in 3.0. Use
+     *             {@link preSubmit()} instead.
+     */
+    public function preBind(FormEvent $event)
+    {
+        $this->preSubmit($event);
+    }
+
     public static function getSubscribedEvents()
     {
-        return array(FormEvents::PRE_BIND => 'preBind');
+        return array(FormEvents::PRE_SUBMIT => 'preSubmit');
     }
 }

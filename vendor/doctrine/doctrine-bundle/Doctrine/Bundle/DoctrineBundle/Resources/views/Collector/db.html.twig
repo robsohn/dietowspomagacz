@@ -10,6 +10,9 @@
         {% if collector.invalidEntityCount > 0 %}
             <span class="sf-toolbar-info-piece-additional sf-toolbar-status sf-toolbar-status-red"> </span>
         {% endif %}
+        {% if collector.cacheEnabled %}
+            <span class="sf-toolbar-info-piece-additional sf-toolbar-status sf-toolbar-status-green" title="Second level cache enabled">2l cache</span>
+        {% endif %}
     {% endset %}
     {% set text %}
         <div class="sf-toolbar-info-piece">
@@ -24,6 +27,20 @@
             <b>Invalid entities</b>
             <span class="sf-toolbar-status sf-toolbar-status-{{ collector.invalidEntityCount > 0 ? 'red' : 'green' }}">{{ collector.invalidEntityCount }}</span>
         </div>
+        {% if collector.cacheEnabled %}
+            <div class="sf-toolbar-info-piece">
+                <b>Cache hits</b>
+                <span class="sf-toolbar-status sf-toolbar-status-green">{{ collector.cacheHitsCount }}</span>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Cache misses</b>
+                <span class="sf-toolbar-status sf-toolbar-status-{{ collector.cacheMissesCount > 0 ? 'yellow' : 'green' }}">{{ collector.cacheMissesCount }}</span>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Cache puts</b>
+                <span class="sf-toolbar-status sf-toolbar-status-{{ collector.cachePutsCount > 0 ? 'yellow' : 'green' }}">{{ collector.cachePutsCount }}</span>
+            </div>
+        {% endif %}
     {% endset %}
     {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': profiler_url } %}
 {% endblock %}
@@ -62,11 +79,20 @@
                 <em>No queries.</em>
             </p>
         {% else %}
+            <p>
+                <button type="button" class="sf-button" onclick="expandAllQueries(this);" data-action="expand">
+                    <span class="border-l">
+                        <span class="border-r">
+                            <span class="btn-bg">Expand all queries</span>
+                        </span>
+                    </span>
+                </button>
+            </p>
             <ul class="alt" id="queriesPlaceholder-{{ loop.index }}">
                 {% for i, query in queries %}
                     <li class="{{ cycle(['odd', 'even'], i) }}" data-extra-info="{{ '%0.2f'|format(query.executionMS * 1000) }}" data-target-id="{{ i }}">
                         <div style="margin-top: 4px" id="queryNo-{{ i }}-{{ loop.parent.loop.index }}">
-                            <div onclick="return expandQuery(this);" title="Expand query" data-target-id="code-{{ i }}-{{ loop.parent.loop.index }}" style="cursor: pointer;">
+                            <div class="query-section" data-state="collapsed" onclick="return expandQuery(this);" title="Expand query" data-target-id="code-{{ i }}-{{ loop.parent.loop.index }}" style="cursor: pointer;">
                                 <img alt="+" src="{{ asset('bundles/framework/images/blue_picto_more.gif') }}" style="display: inline;" />
                                 <img alt="-" src="{{ asset('bundles/framework/images/blue_picto_less.gif') }}" style="display: none;" />
                                 <span style="display: none">Shrink query</span>
@@ -121,6 +147,31 @@
     {% else %}
         <p>
             <em>No entity managers.</em>
+        </p>
+    {% endif %}
+
+    <h2>Second Level Cache</h2>
+
+    {% if collector.cacheCounts %}
+        {% include 'WebProfilerBundle:Profiler:table.html.twig' with {data: collector.cacheCounts} only %}
+
+        {% if collector.cacheRegions.hits %}
+            <h3>Number of cache hits</h3>
+            {% include 'WebProfilerBundle:Profiler:table.html.twig' with {data: collector.cacheRegions.hits} only %}
+        {% endif %}
+
+        {% if collector.cacheRegions.misses %}
+            <h3>Number of cache misses</h3>
+            {% include 'WebProfilerBundle:Profiler:table.html.twig' with {data: collector.cacheRegions.misses} only %}
+        {% endif %}
+
+        {% if collector.cacheRegions.puts %}
+            <h3>Number of cache puts</h3>
+            {% include 'WebProfilerBundle:Profiler:table.html.twig' with {data: collector.cacheRegions.puts} only %}
+        {% endif %}
+    {% else %}
+        <p>
+            <em>No cache.</em>
         </p>
     {% endif %}
 
@@ -181,6 +232,32 @@
             return false;
         }
 
+        function expandAllQueries(button) {
+            var queries = document.getElementsByClassName('query-section'),
+                i = queries.length,
+                action = button.getAttribute('data-action');
+
+            if (action == 'expand') {
+                button.getElementsByClassName('btn-bg')[0].innerHTML = 'Collapse all queries';
+
+                while (i--) {
+                    if (queries[i].getAttribute('data-state') == 'collapsed') {
+                        expandQuery(queries[i]);
+                    }
+                }
+            } else {
+                button.getElementsByClassName('btn-bg')[0].innerHTML = 'Expand all queries';
+
+                while (i--) {
+                    if (queries[i].getAttribute('data-state') == 'expanded') {
+                        expandQuery(queries[i]);
+                    }
+                }
+            }
+
+            button.setAttribute('data-action', action == 'expand' ? 'collapse' : 'expand');
+        }
+
         function expandQuery(link) {
             var sections = link.children,
                 target = link.getAttribute('data-target-id'),
@@ -200,6 +277,8 @@
                 sections[0].style.display = 'none';
                 sections[1].style.display = 'inline';
                 sections[2].style.display = 'inline';
+
+                link.setAttribute('data-state', 'expanded');
             } else {
                 document.getElementById('small' + target).style.display = 'inline';
                 document.getElementById(target).style.display = 'none';
@@ -207,6 +286,8 @@
                 sections[0].style.display = 'inline';
                 sections[1].style.display = 'none';
                 sections[2].style.display = 'none';
+
+                link.setAttribute('data-state', 'collapsed');
             }
 
             return false;

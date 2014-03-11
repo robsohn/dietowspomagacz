@@ -139,14 +139,6 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
     /**
      * {@inheritDoc}
      */
-    public function guessMinLength($class, $property)
-    {
-        trigger_error('guessMinLength() is deprecated since version 2.1 and will be removed in 2.3.', E_USER_DEPRECATED);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function guessPattern($class, $property)
     {
         if ($column = $this->getColumn($class, $property)) {
@@ -183,6 +175,10 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
 
         if ($table && $table->hasColumn($property)) {
             return $this->cache[$class.'::'.$property] = $table->getColumn($property);
+        }
+
+        if ($table && $table->hasColumnByInsensitiveCase($property)) {
+            return $this->cache[$class.'::'.$property] = $table->getColumnByInsensitiveCase($property);
         }
     }
 }

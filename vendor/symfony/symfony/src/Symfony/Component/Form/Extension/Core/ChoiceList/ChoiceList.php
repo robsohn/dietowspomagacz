@@ -14,6 +14,7 @@ namespace Symfony\Component\Form\Extension\Core\ChoiceList;
 use Symfony\Component\Form\FormConfigBuilder;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Extension\Core\View\ChoiceView;
 
 /**
@@ -197,6 +198,8 @@ class ChoiceList implements ChoiceListInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @deprecated Deprecated since version 2.4, to be removed in 3.0.
      */
     public function getIndicesForChoices(array $choices)
     {
@@ -221,6 +224,8 @@ class ChoiceList implements ChoiceListInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @deprecated Deprecated since version 2.4, to be removed in 3.0.
      */
     public function getIndicesForValues(array $values)
     {
@@ -254,7 +259,7 @@ class ChoiceList implements ChoiceListInterface
      * @param array              $labels             The labels corresponding to the choices.
      * @param array              $preferredChoices   The preferred choices.
      *
-     * @throws \InvalidArgumentException     If the structures of the choices and labels array do not match.
+     * @throws InvalidArgumentException     If the structures of the choices and labels array do not match.
      * @throws InvalidConfigurationException If no valid value or index could be created for a choice.
      */
     protected function addChoices(array &$bucketForPreferred, array &$bucketForRemaining, $choices, array $labels, array $preferredChoices)
@@ -262,7 +267,7 @@ class ChoiceList implements ChoiceListInterface
         // Add choices to the nested buckets
         foreach ($choices as $group => $choice) {
             if (!array_key_exists($group, $labels)) {
-                throw new \InvalidArgumentException('The structures of the choices and labels array do not match.');
+                throw new InvalidArgumentException('The structures of the choices and labels array do not match.');
             }
 
             if (is_array($choice)) {
@@ -345,13 +350,13 @@ class ChoiceList implements ChoiceListInterface
         $index = $this->createIndex($choice);
 
         if ('' === $index || null === $index || !FormConfigBuilder::isValidName((string) $index)) {
-            throw new InvalidConfigurationException('The index "' . $index . '" created by the choice list is invalid. It should be a valid, non-empty Form name.');
+            throw new InvalidConfigurationException(sprintf('The index "%s" created by the choice list is invalid. It should be a valid, non-empty Form name.', $index));
         }
 
         $value = $this->createValue($choice);
 
         if (!is_string($value)) {
-            throw new InvalidConfigurationException('The value created by the choice list is of type "' . gettype($value) . '", but should be a string.');
+            throw new InvalidConfigurationException(sprintf('The value created by the choice list is of type "%s", but should be a string.', gettype($value)));
         }
 
         $view = new ChoiceView($choice, $value, $label);
@@ -484,9 +489,9 @@ class ChoiceList implements ChoiceListInterface
      * Extension point. In this implementation, choices are guaranteed to
      * always maintain their type and thus can be typesafely compared.
      *
-     * @param mixed $choice The choice.
+     * @param mixed $choice The choice
      *
-     * @return mixed The fixed choice.
+     * @return mixed The fixed choice
      */
     protected function fixChoice($choice)
     {
@@ -494,14 +499,14 @@ class ChoiceList implements ChoiceListInterface
     }
 
     /**
-    * Fixes the data type of the given choices to avoid comparison problems.
+     * Fixes the data type of the given choices to avoid comparison problems.
      *
-    * @param array $choices The choices.
-    *
-    * @return array The fixed choices.
-    *
-    * @see fixChoice
-    */
+     * @param array $choices The choices.
+     *
+     * @return array The fixed choices.
+     *
+     * @see fixChoice
+     */
     protected function fixChoices(array $choices)
     {
         return $choices;

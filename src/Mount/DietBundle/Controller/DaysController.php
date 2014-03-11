@@ -72,12 +72,12 @@ error_log(print_r($request,1));
         if (count($breakfast) > 0) {
             $mealType = $this->getDoctrine()->getRepository('MountDietBundle:Meal\Type')->findBreakfast();
             foreach ($breakfast as $meal) {
-
+/*
 dayMeal
 day
 meal
 type
-
+*/
 $day->addMeal($dayMeal);
 
 
